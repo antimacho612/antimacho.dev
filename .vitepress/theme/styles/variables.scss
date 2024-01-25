@@ -1,0 +1,167 @@
+@use 'sass:list';
+
+/**
+ * $variablesの内容をCSS変数に変換する
+ *   $variables: 変換対象となる連想配列
+ *               キー: そのままCSS変数名となる
+ *               値  : 要素数が2個以上の配列の場合は1つ目の値が:rootブロック内に定義され、2つ目の値がdarkモード用の変数として.darkブロック内に定義される
+ *                     単一値の場合、要素数が1つの場合は:rootブロック内にのみ定義される
+ * e.g. )
+ * $map: (--primary-color: red blue, --text-color: black);
+ * ↓
+ * :root {
+ *    --primary-color: red;
+ *    --text-color: black;
+ *  }
+ *  .dark {
+ *    --primary-color: blue;
+ *  }
+ */
+@mixin toCssVars($variables) {
+  :root {
+    @each $key, $values in $variables {
+      #{$key}: #{list.nth($values, 1)};
+    }
+  }
+
+  .dark {
+    @each $key, $values in $variables {
+      @if (list.length($values) >= 2) {
+        #{$key}: #{list.nth($values, 2)};
+      }
+    }
+  }
+}
+
+// Global
+:root {
+  font-family: sans-serif !important;
+  --font-family: sans-serif;
+  --font-family-mono: ui-monospace, monospace;
+  --transition-duration: 0.2s;
+
+  // Shadows
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-2: 0 3px 12px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.07);
+  --shadow-3: 0 12px 32px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-4: 0 14px 44px rgba(0, 0, 0, 0.12), 0 3px 9px rgba(0, 0, 0, 0.12);
+  --shadow-5: 0 18px 56px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.16);
+
+  // Icons
+  /* cspell:disable-next-line */
+  --vp-icon-copy: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' height='20' width='20' stroke='rgba(128,128,128,1)' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2'/%3E%3C/svg%3E");
+  /* cspell:disable-next-line */
+  --vp-icon-copied: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' height='20' width='20' stroke='rgba(128,128,128,1)' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9 2 2 4-4'/%3E%3C/svg%3E");
+
+  // Title
+  --title-gradient: linear-gradient(123deg, var(--primary-color), var(--pink-300) 35%, var(--orange-300));
+  --title-gradient-webkit: -webkit-linear-gradient(33deg, var(--primary-color), var(--pink-300) 35%, var(--orange-300));
+
+  --table-of-content-width: 240px;
+}
+
+// Z-indexes
+$zIndexMap: (
+  --z-index-global-header: auto,
+  --z-index-layout-top: auto,
+  --z-index-floating-toc: auto,
+  --z-index-back-to-top: auto,
+);
+$baseZIndex: 0;
+:root {
+  @each $key, $value in $zIndexMap {
+    $result: if($value == auto, $baseZIndex + 10, $value);
+    $baseZIndex: $result;
+
+    #{$key}: #{$result};
+  }
+}
+
+// https://github.com/primefaces/primevue-sass-theme/blob/main/themes/lara/lara-light/purple/theme.scss
+// https://github.com/primefaces/primevue-sass-theme/blob/main/themes/lara/lara-dark/purple/theme.scss
+@include toCssVars(
+  (
+    // light: $primaryDarkColor, dark: $primaryLightColor
+    --primary-color-2: #7c3aed #c4b5fd,
+    // light: $primaryDarkerColor, dark: $primaryLighterColor
+    --primary-color-3: #6d28d9 #ddd6fe
+  )
+);
+
+// Global Header
+@include toCssVars(
+  (
+    --global-header-height: 64px,
+    --global-header-sticky-bg-color: rgba(249, 250, 251, 0.6) rgba(17, 24, 39, 0.3),
+  )
+);
+
+// Severities
+@include toCssVars(
+  (
+    --severity-default: var(--text-color),
+    --severity-default-soft: rgba(#94a3b8, 0.14) rgba(#71717a, 0.2),
+    --severity-primary: var(--primary-color),
+    --severity-primary-soft: rgba(#8b5cf6, 0.14) rgba(#a78bfa, 0.2),
+    --severity-info: var(--blue-500) var(--blue-400),
+    --severity-info-soft: rgba(#3b82f6, 0.14) rgba(#609af8, 0.2),
+    --severity-tip: #10b981 #34d399,
+    --severity-tip-soft: rgba(#10b981, 0.14) rgba(#34d399, 0.2),
+    --severity-warning: var(--yellow-500) var(--yellow-400),
+    --severity-warning-soft: rgba(#eab308, 0.14) rgba(#eec137, 0.2),
+    --severity-danger: var(--red-500) var(--red-400),
+    --severity-danger-soft: rgba(#ff3d32, 0.14) rgba(#ff6259, 0.2),
+  )
+);
+
+// Code
+@include toCssVars(
+  (
+    --vp-code-line-height: 1.7,
+    --vp-code-font-size: 0.875em,
+    // Inline Code
+    --inline-code-bg: rgba(#94a3b8, 0.14) rgba(#71717a, 0.2),
+    --vp-code-color: var(--primary-color),
+    --vp-code-link-color: var(--primary-color),
+    --vp-code-link-hover-color: var(--primary-color-2),
+    --vp-code-block-color: var(--text-color-secondary),
+    // Code Block
+    --code-block-bg: rgba(#94a3b8, 0.14) rgba(#71717a, 0.2),
+    --code-block-highlight-bg: rgba(#94a3b8, 0.2) var(--surface-100),
+    --code-block-lang-bg: var(--code-block-highlight-bg),
+    --code-block-lang-color: var(--text-color),
+    --vp-code-block-divider-color: var(--surface-300) var(--surface-0),
+    // Line Number
+    --vp-code-line-number-color: var(--text-color-secondary),
+    // Diff
+    --vp-code-line-diff-add-color: var(--severity-tip-soft),
+    --vp-code-line-diff-add-symbol-color: var(--severity-tip),
+    --vp-code-line-diff-remove-color: var(--severity-danger-soft),
+    --vp-code-line-diff-remove-symbol-color: var(--severity-danger),
+    // Error / Warning
+    --vp-code-line-warning-color: var(--severity-warning-soft),
+    --vp-code-line-error-color: var(--severity-danger-soft),
+    // Copy Code
+    --vp-code-copy-code-bg: var(--surface-100) var(--surface-50),
+    --vp-code-copy-code-hover-bg: var(--surface-50) var(--surface-100),
+    --vp-code-copy-code-border-color: var(--surface-border),
+    --vp-code-copy-code-hover-border-color: var(--surface-border),
+    --vp-code-copy-code-active-text: var(--text-color-secondary),
+    --vp-code-copy-copied-text-content: 'コピーしました',
+    // Tab
+    --code-tab-bg: var(--surface-200) var(--surface-50),
+    --vp-code-tab-text-color: var(--text-color-secondary),
+    --vp-code-tab-hover-text-color: var(--text-color),
+    --vp-code-tab-active-text-color: var(--text-color),
+    --vp-code-tab-active-bar-color: var(--primary-color),
+    --vp-code-tab-divider: var(--surface-300) var(--surface-0),
+  )
+);
+
+// Table
+@include toCssVars(
+  (
+    --table-tr-bg: var(--surface-ground),
+    --table-tr-even-bg: var(--surface-100) var(--surface-50),
+  )
+);

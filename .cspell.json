@@ -1,0 +1,32 @@
+// https://cspell.org/configuration/
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "composables",
+    "Decorational",
+    "inputtext",
+    "materialdesignicons",
+    "primeflex",
+    "primevue",
+    "shiki",
+    "tabmenu",
+    "tabview",
+    "vitepress",
+    "vuetify",
+    "vueuse"
+  ],
+  "ignorePaths": [
+    ".vitepress/cache",
+    ".vitepress/dist",
+    ".vscode",
+    "node_modules",
+    ".cspell.json",
+    ".editorconfig",
+    ".eslintrc.cjs",
+    ".gitignore",
+    ".prettierrc.cjs",
+    "package.json",
+    "package.lock.json"
+  ]
+}

@@ -1,0 +1,26 @@
+$breakpoints: (
+  sm: 'screen and (min-width: 400px)',
+  md: 'screen and (min-width: 768px)',
+  lg: 'screen and (min-width: 992px)',
+  xl: 'screen and (min-width: 1200px)',
+  2xl: 'screen and (min-width: 1400px)',
+) !default;
+
+@mixin mq($breakpoint) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+
+@mixin focused() {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: var(--focus-ring);
+}
+
+@mixin focused-input() {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: var(--focus-ring);
+  border-color: var(--primary-color);
+}

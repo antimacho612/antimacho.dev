@@ -1,0 +1,86 @@
+.custom-block {
+  --heading-color: var(--severity-default);
+  --bg-color: var(--severity-default-soft);
+
+  // Severities
+  &.info {
+    --bg-color: var(--severity-info-soft);
+    --heading-color: var(--severity-info);
+  }
+  &.tip {
+    --bg-color: var(--severity-tip-soft);
+    --heading-color: var(--severity-tip);
+  }
+  &.danger {
+    --bg-color: var(--severity-danger-soft);
+    --heading-color: var(--severity-danger);
+  }
+  &.warning {
+    --bg-color: var(--severity-warning-soft);
+    --heading-color: var(--severity-warning);
+  }
+  &.details {
+    --bg-color: var(--severity-default-soft);
+    --heading-color: var(--severity-default);
+  }
+
+  padding: 1rem 1rem 0.5rem;
+  line-height: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  border-radius: 12px;
+
+  p + p {
+    margin: 0.5rem 0;
+  }
+
+  a,
+  code {
+    color: var(--primary-color);
+  }
+
+  a {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: opacity 0.25s;
+
+    &:hover,
+    &:hover > code {
+      color: var(--primary-color-2);
+    }
+
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+
+  code {
+    font-size: 0.8rem;
+    background-color: var(--bg-color);
+  }
+
+  th,
+  blockquote > p {
+    font-size: 0.875rem;
+    color: inherit;
+  }
+
+  &.details {
+    summary {
+      margin: 0 0 0.5rem;
+      font-weight: 700;
+      cursor: pointer;
+
+      + p {
+        margin: 0.5rem 0;
+      }
+    }
+  }
+
+  .custom-block-title {
+    color: var(--heading-color);
+    font-weight: 600;
+  }
+}
