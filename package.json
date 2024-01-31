@@ -2,12 +2,6 @@
   "name": "antimacho.dev",
   "version": "1.0.0",
   "private": true,
-  "author": "antimacho612 <antimacho612@gmail.com>",
-  "description": "My notes with vitepress.",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/antimacho612/"
-  },
   "type": "module",
   "scripts": {
     "start": "vitepress dev",
