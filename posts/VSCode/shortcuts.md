@@ -1,7 +1,7 @@
 ---
 title: キーボードショートカット
-cratedAt: Wed Jan 31 2024
-updatedAt: Wed Jan 31 2024
+cratedAt: '2024-01-31T10:09:09.776Z'
+updatedAt: '2024-01-31T10:09:09.776Z'
 ---
 
 ※Windows用
