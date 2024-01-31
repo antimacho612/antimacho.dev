@@ -29,6 +29,7 @@ if (searchText) {
   );
 }
 
+// TODO: Fix
 const onTabClick = () => {
   nextTick(() => {
     const contentContainer = document.querySelector('#content-container');
@@ -42,7 +43,7 @@ const onTabClick = () => {
 </script>
 
 <template>
-  <TabView scrollable class="home-tab-view vp-raw" @tab-click="onTabClick">
+  <TabView scrollable class="home-tab-view" @tab-click="onTabClick">
     <TabPanel v-for="item in panelItems" :key="item.label">
       <template #header>
         <div class="tab-header">
