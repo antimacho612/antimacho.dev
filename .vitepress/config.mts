@@ -8,6 +8,7 @@ export default withMermaid(
   defineConfigWithTheme<ThemeConfig>({
     title: 'antimacho.dev',
     description: 'antimachoの技術メモ',
+    base: '/antimacho.dev/',
     head: [
       [
         'link',
@@ -16,7 +17,7 @@ export default withMermaid(
           href: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="85">🚀</text></svg>',
         },
       ],
-      ['link', { id: 'theme-link', rel: 'stylesheet', href: '/themes/lara-light-purple/theme.css' }],
+      ['link', { id: 'theme-link', rel: 'stylesheet', href: '/antimacho.dev/themes/lara-light-purple/theme.css' }],
     ],
     lang: 'ja-JP',
     cleanUrls: true,
@@ -46,9 +47,9 @@ export default withMermaid(
       },
       gitHubUrl: 'https://github.com/antimacho612/antimacho.dev/',
       langImages: {
-        JavaScript: '/icons/javascript.svg',
-        Mermaid: '/icons/mermaid.svg',
-        VSCode: '/icons/vscode.svg',
+        JavaScript: '/antimacho.dev/icons/javascript.svg',
+        Mermaid: '/antimacho.dev/icons/mermaid.svg',
+        VSCode: '/antimacho.dev/icons/vscode.svg',
       },
       tableOfContent: {
         label: '目次',
