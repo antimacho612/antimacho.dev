@@ -1,10 +1,8 @@
 ---
 title: キーボードショートカット
-cratedAt: '2024-01-31T06:04:47.527Z'
-updatedAt: '2024-01-31T06:04:47.527Z'
+cratedAt: Wed Jan 31 2024
+updatedAt: Wed Jan 31 2024
 ---
-
-<!-- markdownlint-disable MD056 -->
 
 ※Windows用
 
@@ -16,7 +14,7 @@ updatedAt: '2024-01-31T06:04:47.527Z'
 | コマンドパレットを開く | <KeyCombination :values="['Ctrl', 'Shift', 'P']" /> | |
 | 新しいウィンドウ/インスタンス | <KeyCombination :values="['Ctrl', 'Shift', 'N']" /> | |
 | ウィンドウ/インスタンスを閉じる | <KeyCombination :values="['Ctrl', 'Shift', 'W']" /> | |
-| ユーザ設定 | <KeyCombination :values="['Ctrl', ',']" /> |
+| ユーザ設定 | <KeyCombination :values="['Ctrl', ',']" /> | |
 | キーボードショートカット設定画面 | <KeyCombination :values="['Ctrl', 'K']" /> , <KeyCombination :values="['Ctrl', 'S']" /> | |
 | 言語モードを選択 | <KeyCombination :values="['Ctrl', 'K']" /> , <Key value="K" /> | |
 
@@ -46,7 +44,7 @@ updatedAt: '2024-01-31T06:04:47.527Z'
 
 | 操作 | キー | 備考 |
 | :--- | :--- | :--- |
-| 行削除 | <KeyCombination :values="['Ctrl', 'Shift', 'K']" /> |
+| 行削除 | <KeyCombination :values="['Ctrl', 'Shift', 'K']" /> | |
 | 選択範囲コピー/<br>行コピー（非選択状態） | <KeyCombination :values="['Ctrl', 'C']" /> | |
 | 選択範囲切り取り/<br>行切り取り（非選択状態） | <KeyCombination :values="['Ctrl', 'X']" /> | |
 | カーソル行の下に空行を挿入 | <KeyCombination :values="['Ctrl', 'Enter']" /> | |
@@ -85,7 +83,7 @@ updatedAt: '2024-01-31T06:04:47.527Z'
 | 上下スクロール（カーソル位置はそのまま） | <KeyCombination :values="['Ctrl', '↑']" /> / <Key value="↓" /> | |
 | ページ上下（カーソル位置はそのまま） | <KeyCombination :values="['Alt', 'PgUp']" /> / <Key value="PgDn" /> | |
 | 対応するブラケットにジャンプ | <KeyCombination :values="['Ctrl', 'Shift', '\\']" /> | |
-| 指定行にジャンプ | <KeyCombination :values="['Ctrl', 'G']" /> | ・行番号にマイナス値を指定すると最下行からの相対行にジャンプできる<br>・行番号の後ろにカンマ区切りで桁位置も指定できる | |
+| 指定行にジャンプ | <KeyCombination :values="['Ctrl', 'G']" /> | ・行番号にマイナス値を指定すると最下行からの相対行にジャンプできる<br>・行番号の後ろにカンマ区切りで桁位置も指定できる |
 | 最後の編集位置に移動 | <KeyCombination :values="['Ctrl', 'K']" /> , <KeyCombination :values="['Ctrl', 'Q']" /> | |
 
 ## 検索
@@ -173,7 +171,7 @@ updatedAt: '2024-01-31T06:04:47.527Z'
 | パラメータヒントをトリガー | <KeyCombination :values="['Ctrl', 'Shift', 'Space']" /> | |
 | 定義へ移動 | <Key value="F12" /> | |
 | 定義を横に開く | <KeyCombination :values="['Ctrl', 'K']" /> , <Key value="F12" /> | |
-| 参照を表示 | <KeyCombination :values="['Shift', 'F12']" /> |
+| 参照を表示 | <KeyCombination :values="['Shift', 'F12']" /> | |
 | クイックフィックス | <KeyCombination :values="['Ctrl', '.']" /> | |
 | シンボル名の変更 | <Key value="F2" /> | |
 
@@ -190,5 +188,12 @@ updatedAt: '2024-01-31T06:04:47.527Z'
 
 ## 参考
 
-[VS Code の便利なショートカットキー #VSCode - Qiita](https://qiita.com/12345/items/64f4372fbca041e949d0)
-[VS Code Keyboard shortcuts for Windows（日本語版）](https://beanhouse.org/wordpress/wp-content/uploads/2020/05/Keyboard-shortcuts-for-Windows-for-pdf.pdf)
+- [VS Code の便利なショートカットキー #VSCode - Qiita](https://qiita.com/12345/items/64f4372fbca041e949d0)
+- [VS Code Keyboard shortcuts for Windows（日本語版）](https://beanhouse.org/wordpress/wp-content/uploads/2020/05/Keyboard-shortcuts-for-Windows-for-pdf.pdf)
+
+<LinkCard
+  url="https://qiita.com/12345/items/64f4372fbca041e949d0"
+  label="VS Code の便利なショートカットキー - Qiita"
+  imageUrl="https:/qiita-user-contents.imgix.net/https%3A%2F%2Fcdn.qiita.com%2Fassets%2Fpublic%2Farticle-ogp-background-9f5428127621718a910c8b63951390ad.png?ixlib=rb-4.0.0&w=1200&mark64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjAuMCZ3PTkxNiZoPTMzNiZ0eHQ9VlMlMjBDb2RlJTIwJUUzJTgxJUFFJUU0JUJFJUJGJUU1JTg4JUE5JUUzJTgxJUFBJUUzJTgyJUI3JUUzJTgzJUE3JUUzJTgzJUJDJUUzJTgzJTg4JUUzJTgyJUFCJUUzJTgzJTgzJUUzJTgzJTg4JUUzJTgyJUFEJUUzJTgzJUJDJnR4dC1jb2xvcj0lMjMyMTIxMjEmdHh0LWZvbnQ9SGlyYWdpbm8lMjBTYW5zJTIwVzYmdHh0LXNpemU9NTYmdHh0LWNsaXA9ZWxsaXBzaXMmdHh0LWFsaWduPWxlZnQlMkN0b3Amcz05MzU2YWVhMWMzNDBiYjAxMzBkNTQwZTU5Y2JiZjI5Yw&mark-x=142&mark-y=112&blend64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjAuMCZ3PTYxNiZ0eHQ9JTQwMTIzNDUmdHh0LWNvbG9yPSUyMzIxMjEyMSZ0eHQtZm9udD1IaXJhZ2lubyUyMFNhbnMlMjBXNiZ0eHQtc2l6ZT0zNiZ0eHQtYWxpZ249bGVmdCUyQ3RvcCZzPWRiZGM3ZTM5YmJmOWE5NTU4YWE4NjZlZTk0YzljOWZj&blend-x=142&blend-y=491&blend-mode=normal&s=55fb89511f6fe3aac5078e5cfa41c664"
+  description="Visual Studio Codeを自分が使用する際に便利なショートカットキーを、忘れないようにまとめておく。Windows版。v1.57で再確認済み。編集系Ctrl + Enter　カーソル…"
+/>
