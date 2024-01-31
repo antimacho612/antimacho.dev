@@ -1,27 +1,22 @@
-// https://vitepress.dev/guide/custom-theme
 import type { Theme } from 'vitepress';
 import Layout from './Layout.vue';
 import Primevue from 'primevue/config';
-
 import Badge from './components/global/Badge.vue';
-
-// import 'the-new-css-reset/css/reset.css';
-
+import Key from './components/global/Key.vue';
+import KeyCombination from './components/global/KeyCombination.vue';
+import LinkCard from './components/global/LinkCard.vue';
 import './styles/index.scss';
-
-// import 'primevue/resources/themes/lara-dark-purple/theme.css';
-
-// import './styles/variables.scss';
-
-import './styles/components/custom-block.scss';
-import './styles/components/vp-doc.scss';
-import './styles/components/vp-code.scss';
-import './styles/components/vp-code-group.scss';
 
 export default {
   Layout,
   enhanceApp({ app }) {
+    // Global Components
     app.component('Badge', Badge);
+    app.component('Key', Key);
+    app.component('KeyCombination', KeyCombination);
+    app.component('LinkCard', LinkCard);
+
+    // Prime Vue
     app.use(Primevue, { ripple: true });
   },
 } satisfies Theme;

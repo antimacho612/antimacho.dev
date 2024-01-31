@@ -1,81 +1,25 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { onContentUpdated } from 'vitepress';
-import { data as cheatSheets } from '../cheat-sheets.data';
-import { getLangFromPath } from '../utils/grouping';
-
-import TabView from 'primevue/tabview';
-import TabPanel from 'primevue/tabpanel';
+import { provide, ref } from 'vue';
+import { useData } from 'vitepress';
 import QuickSearchInput from '../components/QuickSearchInput.vue';
-import CardLinks from '../components/CardLinks.vue';
+import HomeTabView from '../components/HomeTabView.vue';
+
+const { site } = useData();
 
 const searchText = ref('');
-
-const groups = ref([]);
-
-const resolveGroup = () => {
-  groups.value = cheatSheets.reduce((acc, cur) => {
-    const lang = getLangFromPath(cur.url);
-    const found = acc.find((group) => group.lang === lang);
-
-    if (found) {
-      found.cheatSheets.push(cur);
-    } else {
-      acc.push({
-        lang,
-        cheatSheets: [cur],
-      });
-    }
-
-    return acc;
-  }, []);
-};
-
-// const currentGroup = computed(() => cheatSheets);
-
-resolveGroup();
-
-onContentUpdated(() => {});
+provide('searchText', searchText);
 </script>
 
 <template>
   <div class="home">
     <div class="title-container">
-      <h1 class="title">My Cheat Sheets</h1>
+      <h1 class="title">{{ site.title }}</h1>
     </div>
-    <div class="content-container">
-      <QuickSearchInput v-model="searchText" class="quick-search" />
-
-      <div class="list">
-        <TabView scrollable class="tab-view">
-          <TabPanel>
-            <template #header>
-              <div class="tab-header">
-                <span style="line-height: 1.5rem">すべて ({{ cheatSheets.length }})</span>
-              </div>
-            </template>
-
-            <CardLinks :cheat-sheets="cheatSheets" />
-          </TabPanel>
-
-          <TabPanel>
-            <template #header>
-              <div class="tab-header">
-                <img
-                  src="/icons/javascript.svg"
-                  alt=""
-                  width="24"
-                  height="24"
-                  style="flex-shrink: 0; width: 1.5rem; height: 1.5rem"
-                />
-                <span style="flex-shrink: 0; line-height: 1.5rem">JavaScript (1)</span>
-              </div>
-            </template>
-
-            <CardLinks :cheat-sheets="cheatSheets" />
-          </TabPanel>
-        </TabView>
+    <div id="content-container" class="content-container">
+      <div class="quick-search-input-container">
+        <QuickSearchInput v-model="searchText" class="quick-search" />
       </div>
+      <HomeTabView />
     </div>
   </div>
 </template>
@@ -85,7 +29,11 @@ onContentUpdated(() => {});
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 2rem 2rem 6rem;
+  padding: 2rem 1.5rem 5.5rem;
+
+  @include mq(lg) {
+    padding: 3rem 2rem 0;
+  }
 }
 
 .title-container {
@@ -116,40 +64,24 @@ onContentUpdated(() => {});
 
 .content-container {
   width: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+}
+
+.quick-search-input-container {
+  width: 100%;
+  padding: 1rem 0;
+  background-color: var(--surface-ground);
+  position: sticky;
+  top: var(--global-header-height);
+  z-index: var(--z-index-sticky-quick-search-input);
 }
 
 .quick-search {
   width: 100%;
   max-width: 600px;
-}
-
-.list {
-  width: 100%;
-}
-
-.tab-view {
-  :deep(.p-tabview-nav) {
-    background: var(--surface-ground);
-  }
-  :deep(.p-tabview-header) {
-    flex-shrink: 0;
-  }
-  :deep(.p-tabview-nav-link) {
-    background: var(--surface-ground);
-    padding: 0.75rem;
-  }
-  :deep(.p-tabview-panels) {
-    background: var(--surface-ground);
-  }
-}
-
-.tab-header {
-  display: flex;
-  align-items: center;
-  column-gap: 0.25rem;
+  margin: 0 auto;
 }
 </style>

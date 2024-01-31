@@ -2,13 +2,14 @@
 import { computed } from 'vue';
 import { normalizeLink, isExternalLink } from '../utils/link';
 
-const props = defineProps<{
+interface Props {
   tag?: string;
   href?: string;
   noIcon?: boolean;
   target?: string;
   rel?: string;
-}>();
+}
+const props = defineProps<Props>();
 
 const tag = computed(() => props.tag ?? (props.href ? 'a' : 'span'));
 const isExternal = computed(() => props.href && isExternalLink(props.href));
@@ -17,10 +18,9 @@ const isExternal = computed(() => props.href && isExternalLink(props.href));
 <template>
   <component
     :is="tag"
-    class="VPLink"
+    class="link"
     :class="{
-      link: href,
-      'vp-external-link-icon': isExternal,
+      'external-link-icon': isExternal,
       'no-icon': noIcon,
     }"
     :href="href ? normalizeLink(href) : undefined"

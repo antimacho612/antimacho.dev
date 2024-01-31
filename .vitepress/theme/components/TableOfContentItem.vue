@@ -15,7 +15,7 @@ const onClick = ({ target: el }: Event) => {
 
 <template>
   <ul class="table-of-content-item" :class="root ? 'root' : 'nested'">
-    <li v-for="{ children, link, title } in headers">
+    <li v-for="{ children, link, title } in headers" :key="link">
       <a class="link" :href="link" :title="title" @click="onClick">{{ title }}</a>
       <TableOfContentItem v-if="children?.length" :headers="children" />
     </li>
@@ -53,7 +53,7 @@ const onClick = ({ target: el }: Event) => {
     transition: color var(--transition-duration);
   }
 
-  &:focus {
+  &:focus-visible {
     @include focused();
   }
 }

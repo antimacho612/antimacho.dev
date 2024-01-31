@@ -10,13 +10,9 @@ const showButton = computed(() => y.value >= 50);
 </script>
 
 <template>
-  <Teleport to="body">
-    <Button rounded text raised class="back-to-top-button" :class="{ show: showButton }" @click="y = 0">
-      <template #icon>
-        <ChevronDoubleUpIcon />
-      </template>
-    </Button>
-  </Teleport>
+  <Button rounded text raised class="back-to-top-button" :class="{ show: showButton }" @click="y = 0">
+    <template #icon><ChevronDoubleUpIcon /></template>
+  </Button>
 </template>
 
 <style lang="scss" scoped>

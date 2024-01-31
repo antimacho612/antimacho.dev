@@ -1,6 +1,7 @@
 import { type Ref, onMounted, onUnmounted, onUpdated } from 'vue';
 import { useThrottleFn } from '@vueuse/core';
 import { getScrollOffset } from 'vitepress';
+import { ThemeConfig } from '../types';
 
 export type MenuItem = {
   level: number;
@@ -12,9 +13,8 @@ export type MenuItem = {
 
 const resolvedHeaders: { element: HTMLHeadElement; link: string }[] = [];
 
-export const resolveHeaders = (headers: MenuItem[]) => {
-  // RANGE
-  const [from, to] = [2, 5];
+const resolveHeaders = (headers: MenuItem[], range: [number, number] = [2, 5]) => {
+  const [from, to] = [Math.min(...range), Math.max(...range)];
 
   headers = headers.filter((h) => h.level >= from && h.level <= to);
 
@@ -61,7 +61,7 @@ const serializeHeader = (headerEl: Element) => {
   return text.trim();
 };
 
-export const getHeaders = () => {
+export const getHeaders = (tocConfig: ThemeConfig['tableOfContent']) => {
   const headers = [...document.querySelectorAll<HTMLHeadElement>('.md-content :where(h1,h2,h3,h4,h5,h6)')]
     .filter((headerEl) => headerEl.id && headerEl.hasChildNodes())
     .map((headerEl) => ({
@@ -70,7 +70,7 @@ export const getHeaders = () => {
       link: `#${headerEl.id}`,
       level: Number(headerEl.tagName[1]),
     }));
-  return resolveHeaders(headers);
+  return resolveHeaders(headers, tocConfig?.levelRange);
 };
 
 export const useActiveAnchor = (container: Ref<HTMLElement>, marker: Ref<HTMLElement>) => {

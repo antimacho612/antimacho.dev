@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { ref, shallowRef } from 'vue';
-import { onContentUpdated } from 'vitepress';
+import { onContentUpdated, useData } from 'vitepress';
 import { onClickOutside, onKeyStroke } from '@vueuse/core';
 import { MenuItem, getHeaders } from '../utils/toc';
-
+import { ThemeConfig } from '../types';
 import Button from 'primevue/button';
 import TableOfContentItem from './TableOfContentItem.vue';
 import Bars3Icon from './icons/Bars3Icon.vue';
 import XMarkIcon from './icons/XMarkIcon.vue';
+
+const { theme } = useData<ThemeConfig>();
 
 const open = ref(false);
 
@@ -41,32 +43,29 @@ const onClickBackToTopButton = () => {
 };
 
 const headers = shallowRef<MenuItem[]>([]);
-
 onContentUpdated(() => {
-  headers.value = getHeaders();
+  headers.value = getHeaders(theme.value.tableOfContent);
 });
 </script>
 
 <template>
-  <Teleport to="body">
-    <div class="floating-toc">
-      <Button rounded text raised class="toggle-button" @click="onClickFloatingButton">
-        <template #icon>
-          <XMarkIcon v-if="open" />
-          <Bars3Icon v-else />
-        </template>
-      </Button>
+  <div class="floating-toc">
+    <Button rounded text raised class="toggle-button" @click="onClickFloatingButton">
+      <template #icon>
+        <XMarkIcon v-if="open" />
+        <Bars3Icon v-else />
+      </template>
+    </Button>
 
-      <div v-if="open" ref="container" class="container">
-        <div class="outline">
-          <TableOfContentItem :headers="headers" @click="onClickItem" />
-        </div>
-        <div class="footer">
-          <a href="#" class="back-to-top" @click="onClickBackToTopButton">ページの先頭へ</a>
-        </div>
+    <div v-if="open" ref="container" class="container">
+      <div v-if="headers.length" class="outline">
+        <TableOfContentItem :headers="headers" @click="onClickItem" />
+      </div>
+      <div class="footer">
+        <a href="#" class="back-to-top" @click="onClickBackToTopButton">ページの先頭へ</a>
       </div>
     </div>
-  </Teleport>
+  </div>
 </template>
 
 <style lang="scss" scoped>

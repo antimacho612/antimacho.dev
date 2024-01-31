@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import { onContentUpdated } from 'vitepress';
 import { ref, shallowRef } from 'vue';
+import { onContentUpdated, useData } from 'vitepress';
 import { MenuItem, getHeaders, useActiveAnchor } from '../utils/toc';
+import { ThemeConfig } from '../types';
 import TableOfContentItem from './TableOfContentItem.vue';
+
+const { theme } = useData<ThemeConfig>();
 
 const headers = shallowRef<MenuItem[]>([]);
 
 onContentUpdated(() => {
-  headers.value = getHeaders();
+  headers.value = getHeaders(theme.value.tableOfContent);
 });
 
 const container = ref();
@@ -21,7 +24,9 @@ useActiveAnchor(container, marker);
       <div class="content">
         <div ref="marker" class="marker"></div>
 
-        <div class="title" role="heading" aria-level="2">目次</div>
+        <div class="title" role="heading" aria-level="2">
+          {{ theme.tableOfContent?.label || '目次' }}
+        </div>
 
         <nav>
           <TableOfContentItem :headers="headers" root />

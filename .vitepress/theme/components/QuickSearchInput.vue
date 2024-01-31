@@ -75,6 +75,9 @@ const onFocus = () => {
 
 .input-text {
   width: 100%;
+  height: var(--quick-search-input-height);
+  padding-top: 0;
+  padding-bottom: 0;
   border-radius: 9999px;
 }
 

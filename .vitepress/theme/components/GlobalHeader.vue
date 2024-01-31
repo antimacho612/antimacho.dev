@@ -3,25 +3,30 @@ import { computed } from 'vue';
 import { useData } from 'vitepress';
 import { useWindowScroll } from '@vueuse/core';
 import { normalizeLink } from '../utils/link';
+import Button from 'primevue/button';
 import AppearanceSwitch from './AppearanceSwitch.vue';
 import GitHubIcon from './icons/GitHubIcon.vue';
+import Bars3Icon from './icons/Bars3Icon.vue';
 
-const { site, theme } = useData();
+defineProps<{ hasSidebar: boolean }>();
+
+defineEmits<{ clickMenuButton: [e: MouseEvent] }>();
+
+const { site, page, theme } = useData();
 
 const { y } = useWindowScroll();
-const sticky = computed(() => y.value > 50);
-
-console.log(theme.value);
+const isSticky = computed(() => y.value > 50);
+const isHome = computed(() => page.value.relativePath === 'index.md');
 </script>
 
 <template>
-  <header class="global-header" :class="{ sticky }">
+  <header class="global-header" :class="{ 'is-home': isHome, 'is-sticky': isSticky }">
     <div class="body">
       <div class="left">
-        <a class="title" :href="normalizeLink('/')" tabindex="-1">
-          <template v-if="theme.siteTitle">{{ theme.siteTitle }}</template>
-          <template v-else-if="theme.siteTitle === undefined">{{ site.title }}</template>
-        </a>
+        <Button v-if="hasSidebar" text rounded class="menu-button" @click="$emit('clickMenuButton', $event)">
+          <template #icon><Bars3Icon /></template>
+        </Button>
+        <a class="title" :href="normalizeLink('/')" tabindex="-1">{{ site.title }}</a>
       </div>
 
       <div class="right">
@@ -52,7 +57,7 @@ console.log(theme.value);
   top: 0;
   width: 100%;
   height: var(--global-header-height);
-  padding: 0 2rem;
+  padding: 0 2rem 0 1rem;
   background-color: var(--surface-ground);
   border-bottom: 1px solid transparent;
   z-index: var(--z-index-global-header);
@@ -62,7 +67,7 @@ console.log(theme.value);
     background-color 0.4s,
     border-color 0.4s;
 
-  &.sticky {
+  &.is-sticky:not(.is-home) {
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     background-color: var(--global-header-sticky-bg-color);
@@ -82,7 +87,20 @@ console.log(theme.value);
   }
 }
 
+.menu-button {
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
 .title {
+  flex-shrink: 0;
+  margin-left: 1rem;
   display: flex;
   align-items: center;
   font-size: 1.375rem;
@@ -98,6 +116,8 @@ console.log(theme.value);
 
 .left {
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 
 .right {
