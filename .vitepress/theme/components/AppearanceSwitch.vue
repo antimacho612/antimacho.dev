@@ -15,15 +15,14 @@ const title = computed(() => (isDark.value ? 'ライトモードに切り替え'
     type="button"
     :title="title"
     class="appearance-switch"
-    :class="{ 'is-dark': isDark }"
     role="switch"
     :aria-checked="isDark"
     @click="isDark = !isDark"
   >
     <span class="check">
       <span class="icon">
-        <MoonIcon v-if="isDark" class="moon-icon" />
-        <SunIcon v-else class="sun-icon" />
+        <MoonIcon class="moon-icon" />
+        <SunIcon class="sun-icon" />
       </span>
     </span>
   </button>
@@ -69,10 +68,6 @@ const title = computed(() => (isDark.value ? 'ライトモードに切り替え'
   transition: transform var(--transition-duration) !important;
 }
 
-.appearance-switch.is-dark .check {
-  transform: translateX(var(--height));
-}
-
 .icon {
   position: relative;
   display: block;
@@ -93,8 +88,30 @@ const title = computed(() => (isDark.value ? 'ライトモードに切り替え'
   }
 }
 
-.dark .icon svg {
-  fill: var(--text-color);
-  transition: opacity var(--transition-duration) !important;
+.sun-icon {
+  display: block;
+}
+
+.moon-icon {
+  display: none;
+}
+
+.dark {
+  .check {
+    transform: translateX(var(--height));
+  }
+
+  .sun-icon {
+    display: none;
+  }
+
+  .moon-icon {
+    display: block;
+  }
+
+  .icon svg {
+    fill: var(--text-color);
+    transition: opacity var(--transition-duration) !important;
+  }
 }
 </style>
