@@ -1,7 +1,7 @@
 ---
 title: キーボードショートカット
 cratedAt: '2024-01-31T19:19:43+09:00'
-updatedAt: '2024-01-31T19:19:43+09:00'
+updatedAt: '2024-02-01T01:06:48+09:00'
 ---
 
 ※Windows用
@@ -194,6 +194,6 @@ updatedAt: '2024-01-31T19:19:43+09:00'
 <LinkCard
   url="https://qiita.com/12345/items/64f4372fbca041e949d0"
   label="VS Code の便利なショートカットキー - Qiita"
-  imageUrl="https:/qiita-user-contents.imgix.net/https%3A%2F%2Fcdn.qiita.com%2Fassets%2Fpublic%2Farticle-ogp-background-9f5428127621718a910c8b63951390ad.png?ixlib=rb-4.0.0&w=1200&mark64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjAuMCZ3PTkxNiZoPTMzNiZ0eHQ9VlMlMjBDb2RlJTIwJUUzJTgxJUFFJUU0JUJFJUJGJUU1JTg4JUE5JUUzJTgxJUFBJUUzJTgyJUI3JUUzJTgzJUE3JUUzJTgzJUJDJUUzJTgzJTg4JUUzJTgyJUFCJUUzJTgzJTgzJUUzJTgzJTg4JUUzJTgyJUFEJUUzJTgzJUJDJnR4dC1jb2xvcj0lMjMyMTIxMjEmdHh0LWZvbnQ9SGlyYWdpbm8lMjBTYW5zJTIwVzYmdHh0LXNpemU9NTYmdHh0LWNsaXA9ZWxsaXBzaXMmdHh0LWFsaWduPWxlZnQlMkN0b3Amcz05MzU2YWVhMWMzNDBiYjAxMzBkNTQwZTU5Y2JiZjI5Yw&mark-x=142&mark-y=112&blend64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjAuMCZ3PTYxNiZ0eHQ9JTQwMTIzNDUmdHh0LWNvbG9yPSUyMzIxMjEyMSZ0eHQtZm9udD1IaXJhZ2lubyUyMFNhbnMlMjBXNiZ0eHQtc2l6ZT0zNiZ0eHQtYWxpZ249bGVmdCUyQ3RvcCZzPWRiZGM3ZTM5YmJmOWE5NTU4YWE4NjZlZTk0YzljOWZj&blend-x=142&blend-y=491&blend-mode=normal&s=55fb89511f6fe3aac5078e5cfa41c664"
+  imageUrl="https://qiita-user-contents.imgix.net/https%3A%2F%2Fcdn.qiita.com%2Fassets%2Fpublic%2Farticle-ogp-background-9f5428127621718a910c8b63951390ad.png?ixlib=rb-4.0.0&w=1200&mark64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjAuMCZ3PTkxNiZoPTMzNiZ0eHQ9VlMlMjBDb2RlJTIwJUUzJTgxJUFFJUU0JUJFJUJGJUU1JTg4JUE5JUUzJTgxJUFBJUUzJTgyJUI3JUUzJTgzJUE3JUUzJTgzJUJDJUUzJTgzJTg4JUUzJTgyJUFCJUUzJTgzJTgzJUUzJTgzJTg4JUUzJTgyJUFEJUUzJTgzJUJDJnR4dC1jb2xvcj0lMjMyMTIxMjEmdHh0LWZvbnQ9SGlyYWdpbm8lMjBTYW5zJTIwVzYmdHh0LXNpemU9NTYmdHh0LWNsaXA9ZWxsaXBzaXMmdHh0LWFsaWduPWxlZnQlMkN0b3Amcz05MzU2YWVhMWMzNDBiYjAxMzBkNTQwZTU5Y2JiZjI5Yw&mark-x=142&mark-y=112&blend64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjAuMCZ3PTYxNiZ0eHQ9JTQwMTIzNDUmdHh0LWNvbG9yPSUyMzIxMjEyMSZ0eHQtZm9udD1IaXJhZ2lubyUyMFNhbnMlMjBXNiZ0eHQtc2l6ZT0zNiZ0eHQtYWxpZ249bGVmdCUyQ3RvcCZzPWRiZGM3ZTM5YmJmOWE5NTU4YWE4NjZlZTk0YzljOWZj&blend-x=142&blend-y=491&blend-mode=normal&s=55fb89511f6fe3aac5078e5cfa41c664"
   description="Visual Studio Codeを自分が使用する際に便利なショートカットキーを、忘れないようにまとめておく。Windows版。v1.57で再確認済み。編集系Ctrl + Enter　カーソル…"
 />
