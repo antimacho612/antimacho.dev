@@ -21,13 +21,16 @@ const {
   toggle: toggleSidebar,
 } = useSidebar();
 const isContentInert = computed(() => hasSidebar.value && isBackdropVisible.value);
+const onClickLink = () => {
+  isBackdropVisible.value && closeSidebar();
+};
 </script>
 
 <template>
   <div class="layout">
     <GlobalHeader :has-sidebar="hasSidebar" @click-menu-button="toggleSidebar()" />
 
-    <Sidebar v-if="hasSidebar" :open="isSidebarOpen" @click-backdrop="closeSidebar()" />
+    <Sidebar v-if="hasSidebar" :open="isSidebarOpen" @click-backdrop="closeSidebar()" @click-link="onClickLink" />
 
     <div id="content" class="content" :inert="isContentInert">
       <NotFound v-if="page.isNotFound" />

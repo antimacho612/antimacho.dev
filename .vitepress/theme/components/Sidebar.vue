@@ -8,7 +8,7 @@ import LangImage from './LangImage.vue';
 
 const props = defineProps<{ open: boolean }>();
 
-defineEmits<{ clickBackdrop: [e: MouseEvent] }>();
+defineEmits<{ clickBackdrop: [e: MouseEvent]; clickLink: [e: MouseEvent] }>();
 
 const { lang, links, isActiveLink } = useSidebarLink();
 
@@ -49,6 +49,7 @@ watch(
           :href="link.url"
           class="link"
           :class="{ 'is-current': isActiveLink(link.url) }"
+          @click="$emit('clickLink', $event)"
         >
           {{ link.title }}
         </Link>
