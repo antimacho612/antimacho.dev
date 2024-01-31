@@ -1,0 +1,18 @@
+{
+  // https://github.com/DavidAnson/markdownlint/blob/main/README.md
+  "config": {
+    "line-length": false,
+    "no-bare-urls": false,
+    "no-inline-html": {
+      "allowed_elements": [
+        "br",
+        "img",
+        // Global Components
+        "Badge",
+        "Key",
+        "KeyCombination",
+        "LinkCard"
+      ]
+    }
+  }
+}

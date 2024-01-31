@@ -1,11 +1,34 @@
 {
+  "name": "antimacho.dev",
+  "version": "1.0.0",
+  "private": true,
+  "author": "antimacho612 <antimacho612@gmail.com>",
+  "description": "My notes with vitepress.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antimacho612/"
+  },
   "type": "module",
   "scripts": {
     "start": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview",
-    "eslint": "eslint \".vitepress/theme/**/*.{ts,mts,vue}\" --fix",
-    "prettier": "prettier .vitepress/theme/**/*.{css,scss,ts,mts,vue} --write"
+    "lint:eslint": "eslint \".vitepress/theme/**/*.{ts,mts,vue}\" --fix",
+    "lint:markdown": "markdownlint-cli2 \"posts/**/*.md\"",
+    "lint:text": "textlint \"posts/**/*.md\"",
+    "prettier": "prettier . --check --write",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    ".vitepress/theme/**/*.{ts,mts,vue}": [
+      "prettier",
+      "eslint"
+    ],
+    "posts/**/*.md": [
+      "node scripts/updateFrontmatter",
+      "textlint",
+      "markdownlint-cli2"
+    ]
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.7.0",
@@ -15,9 +38,22 @@
     "cspell": "^8.3.2",
     "eslint": "^8.56.0",
     "eslint-plugin-vue": "^9.20.1",
+    "gray-matter": "^4.0.3",
+    "husky": "^9.0.7",
+    "lint-staged": "^15.2.0",
+    "markdown-it": "^14.0.0",
+    "markdownlint-cli2": "^0.12.1",
+    "mermaid": "^10.7.0",
     "prettier": "^3.2.4",
     "sass": "^1.70.0",
+    "textlint": "^13.4.1",
+    "textlint-rule-ja-no-redundant-expression": "^4.0.1",
+    "textlint-rule-ja-unnatural-alphabet": "^2.0.1",
+    "textlint-rule-no-doubled-joshi": "^5.1.0",
+    "textlint-rule-preset-ja-spacing": "^2.3.0",
+    "textlint-rule-prh": "^5.3.0",
     "vitepress": "^1.0.0-rc.39",
+    "vitepress-plugin-mermaid": "^2.0.16",
     "vue": "^3.4.15"
   },
   "dependencies": {

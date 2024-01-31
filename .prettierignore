@@ -1,0 +1,9 @@
+*.md
+.husky
+.markdownlint-cli2.jsonc
+.textlintrc.json
+.temp
+dist
+cache
+temp
+package-lock.json

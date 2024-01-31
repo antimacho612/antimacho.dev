@@ -2,31 +2,45 @@
 {
   "version": "0.2",
   "language": "en",
+  "ignoreRegExpList": ["(https?|file|ftp):[^\\s]*$"],
   "words": [
+    "antimacho",
     "composables",
     "Decorational",
     "inputtext",
+    "linkify",
+    "maskbg",
     "materialdesignicons",
-    "primeflex",
+    "nofollow",
+    "noopener",
+    "noreferrer",
     "primevue",
+    "Qiita",
     "shiki",
     "tabmenu",
     "tabview",
     "vitepress",
     "vuetify",
-    "vueuse"
+    "vueuse",
+    "zenn"
   ],
   "ignorePaths": [
-    ".vitepress/cache",
-    ".vitepress/dist",
-    ".vscode",
+    "cache",
+    "dist",
     "node_modules",
+    ".husky",
+    ".vscode",
     ".cspell.json",
     ".editorconfig",
     ".eslintrc.cjs",
     ".gitignore",
+    ".markdownlint-cli2.jsonc",
     ".prettierrc.cjs",
+    ".prettierignore",
+    ".textlintrc.json",
     "package.json",
-    "package.lock.json"
+    "package.lock.json",
+    "renovate.json",
+    "tsconfig.json"
   ]
 }

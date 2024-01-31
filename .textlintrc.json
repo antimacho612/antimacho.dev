@@ -1,0 +1,22 @@
+{
+  "plugins": {
+    "@textlint/markdown": {
+      "extensions": [".md"]
+    }
+  },
+  "filters": {},
+  "rules": {
+    "prh": {
+      "rulePaths": ["./prh/index.yml"]
+    },
+    "ja-no-redundant-expression": true,
+    "ja-unnatural-alphabet": true,
+    "no-doubled-joshi": true,
+    "preset-ja-spacing": {
+      "ja-space-around-code": {
+        "before": true,
+        "after": true
+      }
+    }
+  }
+}
