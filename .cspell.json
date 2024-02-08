@@ -2,26 +2,35 @@
 {
   "version": "0.2",
   "language": "en",
-  "ignoreRegExpList": ["(https?|file|ftp):[^\\s]*$"],
+  "ignoreRegExpList": [
+    "(https?|file|ftp):[^\\s]*$"
+  ],
   "words": [
     "antimacho",
+    "Buzan",
     "composables",
     "Decorational",
+    "gantt",
     "inputtext",
     "linkify",
     "maskbg",
     "materialdesignicons",
+    "mindmap",
     "nofollow",
     "noopener",
     "noreferrer",
+    "Popularisation",
     "primevue",
     "Qiita",
+    "sankey",
     "shiki",
     "tabmenu",
     "tabview",
+    "verifymethod",
     "vitepress",
     "vuetify",
     "vueuse",
+    "xychart",
     "zenn"
   ],
   "ignorePaths": [
