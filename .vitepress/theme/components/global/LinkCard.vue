@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getDomainFromUrl } from '.vitepress/theme/utils/link';
+import { getDomainFromUrl } from '../../utils/link';
 
 interface Props {
   url: string;
