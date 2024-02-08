@@ -1,7 +1,7 @@
 ---
 title: Mermaidで作成できる図
 cratedAt: '2024-02-08T13:27:40+09:00'
-updatedAt: '2024-02-08T13:27:40+09:00'
+updatedAt: '2024-02-08T14:13:45+09:00'
 ---
 
 ## 公式HP
@@ -9,7 +9,7 @@ updatedAt: '2024-02-08T13:27:40+09:00'
 <LinkCard
   url="https://mermaid.js.org/intro/#diagram-types"
   label="About Mermaid"
-  imageUrl="https:/mermaid.js.org/favicon.ico"
+  imageUrl="https://mermaid.js.org/favicon.ico"
   description="Create diagrams and visualizations using text and code."
 />
 
