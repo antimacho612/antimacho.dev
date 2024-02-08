@@ -14,8 +14,8 @@
     "no-doubled-joshi": true,
     "preset-ja-spacing": {
       "ja-space-around-code": {
-        "before": true,
-        "after": true
+        "before": false,
+        "after": false
       }
     }
   }
