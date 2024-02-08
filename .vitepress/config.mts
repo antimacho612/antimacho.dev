@@ -43,7 +43,7 @@ export default withMermaid(
     themeConfig: {
       editLink: {
         text: 'このページをGitHubで編集する',
-        pattern: 'https://github.com/antimacho612/antimacho.dev/',
+        pattern: 'https://github.com/antimacho612/antimacho.dev/blob/main/:path?plain=1',
       },
       gitHubUrl: 'https://github.com/antimacho612/antimacho.dev/',
       langImages: {
