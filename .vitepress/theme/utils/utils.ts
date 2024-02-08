@@ -1,4 +1,4 @@
-import { useData } from 'vitepress';
+import { useData, withBase } from 'vitepress';
 import { ThemeConfig } from '../types';
 import { ensureStartingSlash } from './link';
 
@@ -20,24 +20,39 @@ export const formatDate = (date: Date, includeTime = false) => {
   return str;
 };
 
-export const getLangFromPath = (path: string) => {
+export const getCategoryFromPath = (path: string) => {
   const matches = path.replace(/^\/posts/, '').match(/\/(.*?)\//);
   return matches ? matches[1] : undefined;
 };
 
-export const getLangImage = (lang?: string): string | undefined => {
-  if (!lang) {
+export const getCategoryImage = (category?: string): string | undefined => {
+  if (!category) {
     return undefined;
   }
 
   const { theme } = useData<ThemeConfig>();
-  if (!theme.value.langImages || !theme.value.langImages[lang]) {
+  if (!theme.value.categories) {
     return undefined;
   }
 
-  return ensureStartingSlash(theme.value.langImages[lang]);
+  const categoryConfig = theme.value.categories[category];
+  if (!categoryConfig) {
+    return undefined;
+  }
+
+  const categoryImageSrc = categoryConfig.imageSrc;
+  if (!categoryImageSrc) {
+    return undefined;
+  }
+
+  return withBase(ensureStartingSlash(categoryImageSrc));
 };
 
 export const getDomainFromUrl = (url: string) => {
-  return new URL(url).hostname;
+  try {
+    return new URL(url).hostname;
+  } catch (e) {
+    console.error(e);
+    return undefined;
+  }
 };

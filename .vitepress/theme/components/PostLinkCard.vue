@@ -2,7 +2,7 @@
 import type { Post } from '../types';
 import { formatDate } from '../utils/utils';
 import { normalizeLink } from '../utils/link';
-import LangImage from './LangImage.vue';
+import CategoryImage from './CategoryImage.vue';
 
 defineProps<{ post: Post }>();
 </script>
@@ -16,8 +16,8 @@ defineProps<{ post: Post }>();
     </div>
     <div class="footer">
       <div class="left">
-        <LangImage :lang="post.lang" class="image" />
-        <span class="lang">{{ post.lang }}</span>
+        <CategoryImage :category="post.category" class="image" />
+        <span class="category">{{ post.category }}</span>
       </div>
       <div class="right">
         <p>
@@ -97,7 +97,7 @@ defineProps<{ post: Post }>();
       height: 1.75rem;
     }
 
-    .lang {
+    .category {
       color: var(--text-color-secondary);
       font-size: 0.9rem;
       text-overflow: ellipsis;

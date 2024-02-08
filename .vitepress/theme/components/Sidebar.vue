@@ -4,13 +4,13 @@ import { inBrowser } from 'vitepress';
 import { useMediaQuery, useScrollLock } from '@vueuse/core';
 import { useSidebarLink } from '../composables/useSidebarLink';
 import Link from './Link.vue';
-import LangImage from './LangImage.vue';
+import CategoryImage from './CategoryImage.vue';
 
 const props = defineProps<{ open: boolean }>();
 
 defineEmits<{ clickBackdrop: [e: MouseEvent]; clickLink: [e: MouseEvent] }>();
 
-const { lang, links, isActiveLink } = useSidebarLink();
+const { category, links, isActiveLink } = useSidebarLink();
 
 const isScreenXL = useMediaQuery('(min-width: 1200px)');
 const sidebarEl = ref<HTMLElement | undefined>();
@@ -38,9 +38,9 @@ watch(
     </Teleport>
 
     <nav class="nav" tabindex="-1">
-      <div class="lang">
-        <LangImage :lang="lang" class="lang-image" />
-        <span class="lang-label">{{ lang }}</span>
+      <div class="category">
+        <CategoryImage :category="category" class="category-image" />
+        <span class="category-label">{{ category }}</span>
       </div>
       <div class="links">
         <Link
@@ -107,7 +107,7 @@ watch(
   }
 }
 
-.lang {
+.category {
   position: sticky;
   top: 0;
   padding: 0.75rem 0;
@@ -116,14 +116,14 @@ watch(
   align-items: center;
   gap: 0.25rem;
 
-  .lang-image {
+  .category-image {
     --size: 1.25rem;
     flex-shrink: 0;
     width: var(--size);
     height: var(--size);
   }
 
-  .lang-label {
+  .category-label {
     font-size: 1.125rem;
     font-weight: 500;
   }

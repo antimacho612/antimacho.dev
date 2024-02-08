@@ -4,7 +4,7 @@ import { watchDebounced } from '@vueuse/core';
 import { useHomeTab } from '../composables/useHomeTab';
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
-import LangImage from './LangImage.vue';
+import CategoryImage from './CategoryImage.vue';
 import PostLinkCards from './PostLinkCards.vue';
 
 const { panelItems } = useHomeTab();
@@ -47,7 +47,7 @@ const onTabClick = () => {
     <TabPanel v-for="item in panelItems" :key="item.label">
       <template #header>
         <div class="tab-header">
-          <LangImage :lang="item.lang" class="image" />
+          <CategoryImage :category="item.category" class="image" />
           <span class="label">{{ item.label }} ({{ item.filteredPosts.length }})</span>
         </div>
       </template>

@@ -10,8 +10,11 @@ export interface ThemeConfig {
     text?: string;
     pattern: string | ((payload: PageData) => string);
   };
-  langImages?: {
-    [lang: string]: string;
+  categories?: {
+    [key: string]: {
+      priority?: number;
+      imageSrc?: string;
+    };
   };
 }
 
@@ -19,7 +22,7 @@ export interface Post {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   frontmatter: Record<string, any>;
   title: string;
-  lang?: string;
+  category?: string;
   createdAt?: string;
   updatedAt?: string;
   url: string;
@@ -32,7 +35,7 @@ export type SidebarLink = {
 
 export type HomeTabPanelItem = {
   label: string;
-  lang?: string;
+  category?: string;
   posts: Post[];
   filteredPosts: Post[];
 };

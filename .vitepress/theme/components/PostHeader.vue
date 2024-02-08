@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useData } from 'vitepress';
-import { formatDate, getLangFromPath } from '../utils/utils';
-import LangImage from './LangImage.vue';
+import { formatDate, getCategoryFromPath } from '../utils/utils';
+import CategoryImage from './CategoryImage.vue';
 
 const { frontmatter, page } = useData();
 
@@ -14,14 +14,14 @@ const createdAtISOString = computed(() => createdAt.value.toISOString());
 const updatedAt = computed(() => new Date(frontmatter.value.updatedAt ?? page.value.lastUpdated));
 const updatedAtISOString = computed(() => updatedAt.value.toISOString());
 
-const lang = computed(() => getLangFromPath(page.value.filePath));
+const category = computed(() => getCategoryFromPath(page.value.filePath));
 </script>
 
 <template>
   <div class="post-header">
-    <div class="lang">
-      <LangImage :lang="lang" class="lang-image" />
-      <span class="lang-label">{{ lang }}</span>
+    <div class="category">
+      <CategoryImage :category="category" class="category-image" />
+      <span class="category-label">{{ category }}</span>
     </div>
     <h1 class="title">{{ frontmatter.title }}</h1>
     <div class="info">
@@ -36,19 +36,19 @@ const lang = computed(() => getLangFromPath(page.value.filePath));
 </template>
 
 <style lang="scss" scoped>
-.lang {
+.category {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
 
-  .lang-image {
+  .category-image {
     --size: 1rem;
     flex-shrink: 0;
     width: var(--size);
     height: var(--size);
   }
 
-  .lang-label {
+  .category-label {
     flex-shrink: 0;
     color: var(--text-color-secondary);
     font-size: 0.875rem;

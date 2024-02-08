@@ -46,10 +46,16 @@ export default withMermaid(
         pattern: 'https://github.com/antimacho612/antimacho.dev/blob/main/:path?plain=1',
       },
       gitHubUrl: 'https://github.com/antimacho612/antimacho.dev/',
-      langImages: {
-        JavaScript: '/antimacho.dev/icons/javascript.svg',
-        Mermaid: '/antimacho.dev/icons/mermaid.svg',
-        VSCode: '/antimacho.dev/icons/vscode.svg',
+      categories: {
+        JavaScript: {
+          imageSrc: '/icons/javascript.svg',
+        },
+        Mermaid: {
+          imageSrc: '/icons/mermaid.svg',
+        },
+        VSCode: {
+          imageSrc: '/icons/vscode.svg',
+        },
       },
       tableOfContent: {
         label: '目次',
