@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getDomainFromUrl } from '../../utils/utils';
+import { getDomainFromUrl } from '.vitepress/theme/utils/link';
 
 interface Props {
   url: string;
@@ -21,11 +21,7 @@ const domain = getDomainFromUrl(props.url);
         <p class="description">{{ description }}</p>
       </div>
       <div class="bottom">
-        <img
-          :src="`https://www.google.com/s2/u/0/favicons?domain=${getDomainFromUrl(props.url)}`"
-          :alt="domain"
-          class="domain-thumbnail"
-        />
+        <img :src="`https://www.google.com/s2/u/0/favicons?domain=${domain}`" :alt="domain" class="domain-thumbnail" />
         <div class="domain-name">{{ domain }}</div>
       </div>
     </div>
