@@ -69,3 +69,12 @@ export const isActive = (currentPath: string, matchPath?: string) => {
 
   return true;
 };
+
+export const getDomainFromUrl = (url: string) => {
+  try {
+    return new URL(url).hostname;
+  } catch (e) {
+    console.error(e);
+    return undefined;
+  }
+};

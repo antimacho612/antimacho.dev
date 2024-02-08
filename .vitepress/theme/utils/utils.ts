@@ -47,12 +47,3 @@ export const getCategoryImage = (category?: string): string | undefined => {
 
   return withBase(ensureStartingSlash(categoryImageSrc));
 };
-
-export const getDomainFromUrl = (url: string) => {
-  try {
-    return new URL(url).hostname;
-  } catch (e) {
-    console.error(e);
-    return undefined;
-  }
-};
