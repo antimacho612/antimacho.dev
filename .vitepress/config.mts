@@ -47,6 +47,11 @@ export default withMermaid(
       },
       gitHubUrl: 'https://github.com/antimacho612/antimacho.dev/',
       categories: {
+        General: {
+          label: '一般',
+          priority: 100,
+          imageSrc: '/icons/general.svg',
+        },
         JavaScript: {
           imageSrc: '/icons/javascript.svg',
         },

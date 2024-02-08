@@ -12,6 +12,14 @@ export interface ThemeConfig {
   };
   categories?: {
     [key: string]: {
+      label?: string;
+      /**
+       * カテゴリの並びの優先度（e.g. ホーム画面のタブメニュー）
+       * 数字が大きいカテゴリが前に来る
+       * 無指定の場合は優先度`0`として扱われる
+       * 負数を指定すれば後ろに持って行くことができる
+       * 同じ数字のカテゴリはカテゴリ名の昇順で並ぶ
+       */
       priority?: number;
       imageSrc?: string;
     };
@@ -36,6 +44,7 @@ export type SidebarLink = {
 export type HomeTabPanelItem = {
   label: string;
   category?: string;
+  categoryPriority?: number;
   posts: Post[];
   filteredPosts: Post[];
 };

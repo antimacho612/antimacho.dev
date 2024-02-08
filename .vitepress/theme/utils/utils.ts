@@ -2,7 +2,7 @@ import { useData, withBase } from 'vitepress';
 import { ThemeConfig } from '../types';
 import { ensureStartingSlash } from './link';
 
-export const formatDate = (date: Date, includeTime = false) => {
+export const formatDate = (date: Date, includeTime = false): string => {
   let str;
 
   const year = date.getFullYear();
@@ -20,7 +20,7 @@ export const formatDate = (date: Date, includeTime = false) => {
   return str;
 };
 
-export const getCategoryFromPath = (path: string) => {
+export const getCategoryFromPath = (path: string): string | undefined => {
   const matches = path.replace(/^\/posts/, '').match(/\/(.*?)\//);
   return matches ? matches[1] : undefined;
 };

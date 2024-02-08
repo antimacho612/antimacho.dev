@@ -1,7 +1,8 @@
 import { type ContentData, createContentLoader } from 'vitepress';
 import { Post } from './types';
+import { sortArrayOfObjects } from './utils/sort';
 
-const getCategoryFromPath = (path: string) => {
+const getCategoryFromPath = (path: string): string | undefined => {
   const matches = path.replace(/^\/posts/, '').match(/\/(.*?)\//);
   return matches ? matches[1] : undefined;
 };
@@ -23,7 +24,8 @@ export default {
   ...loader,
   async load() {
     const data = await loader.load();
-    return data.map(contentDataToPostData);
+    const posts = data.map(contentDataToPostData);
+    return sortArrayOfObjects(posts, [{ key: 'createdAt', order: 'Desc' }, { key: 'title' }]);
   },
 };
 
