@@ -1,13 +1,25 @@
 <script setup lang="ts">
-import { provide, ref } from 'vue';
+import { ref } from 'vue';
 import { useData } from 'vitepress';
+import { Order, PostsSortKey } from '../utils/sort';
 import QuickSearchInput from '../components/QuickSearchInput.vue';
+import SortWidget, { type SortMenuItem } from '../components/SortWidget.vue';
 import HomeTabView from '../components/HomeTabView.vue';
 
 const { site } = useData();
 
 const searchText = ref('');
-provide('searchText', searchText);
+
+const SORT_OPTIONS: SortMenuItem[] = [
+  { label: 'タイトルの昇順', sortBy: 'Title', order: 'Asc' },
+  { label: 'タイトルの降順', sortBy: 'Title', order: 'Desc' },
+  { label: '作成日が新しい順', sortBy: 'CreatedAt', order: 'Desc' },
+  { label: '作成日が古い順', sortBy: 'CreatedAt', order: 'Asc' },
+  { label: '更新日が新しい順', sortBy: 'UpdatedAt', order: 'Desc' },
+  { label: '更新日が古い順', sortBy: 'UpdatedAt', order: 'Asc' },
+];
+const sortBy = ref<PostsSortKey>('CreatedAt');
+const order = ref<Order>('Desc');
 </script>
 
 <template>
@@ -16,10 +28,13 @@ provide('searchText', searchText);
       <h1 class="title">{{ site.title }}</h1>
     </div>
     <div id="content-container" class="content-container">
-      <div class="quick-search-input-container">
+      <div class="actions-container">
+        <div></div>
         <QuickSearchInput v-model="searchText" class="quick-search" />
+        <SortWidget v-model:sortBy="sortBy" v-model:order="order" :items="SORT_OPTIONS" />
       </div>
-      <HomeTabView />
+
+      <HomeTabView :searchText="searchText" :sortBy="sortBy" :order="order" />
     </div>
   </div>
 </template>
@@ -70,18 +85,28 @@ provide('searchText', searchText);
   align-items: center;
 }
 
-.quick-search-input-container {
+.actions-container {
   width: 100%;
   padding: 1rem 0;
+  display: grid;
+  grid-template-columns: 0 1fr 11rem;
+  @include mq(lg) {
+    grid-template-columns: 11rem 1fr 11rem;
+  }
+  column-gap: 0.5rem;
   background-color: var(--surface-ground);
   position: sticky;
   top: var(--global-header-height);
   z-index: var(--z-index-sticky-quick-search-input);
-}
 
-.quick-search {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
+  .quick-search {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .sort-widget {
+    margin-right: auto;
+  }
 }
 </style>

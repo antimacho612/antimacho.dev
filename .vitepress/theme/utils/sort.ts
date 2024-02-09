@@ -1,3 +1,5 @@
+import { Post } from '../types';
+
 export type Order = 'Asc' | 'Desc';
 
 export type SortOption<T> = {
@@ -5,7 +7,7 @@ export type SortOption<T> = {
   order?: Order;
 };
 
-export const sortArrayOfObjects = <T>(array: T[], sortOptions: SortOption<T>[]) => {
+export const sortArrayOfObjects = <T>(array: readonly T[], sortOptions: SortOption<T>[]) => {
   const compareFn = (a: T, b: T): number => {
     let collator: Intl.Collator | undefined;
 
@@ -32,5 +34,18 @@ export const sortArrayOfObjects = <T>(array: T[], sortOptions: SortOption<T>[]) 
     return 0;
   };
 
-  return array.sort(compareFn);
+  return [...array].sort(compareFn);
+};
+
+export type PostsSortKey = 'Title' | 'CreatedAt' | 'UpdatedAt';
+
+export const getPostsSortOptions = (key: PostsSortKey, order: Order): SortOption<Post>[] => {
+  switch (key) {
+    case 'Title':
+      return [{ key: 'title', order }];
+    case 'CreatedAt':
+      return [{ key: 'createdAt', order }, { key: 'title' }];
+    case 'UpdatedAt':
+      return [{ key: 'updatedAt', order }, { key: 'title' }];
+  }
 };

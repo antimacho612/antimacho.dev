@@ -1,33 +1,54 @@
 <script setup lang="ts">
-import { Ref, inject, nextTick } from 'vue';
+import { computed, nextTick } from 'vue';
 import { watchDebounced } from '@vueuse/core';
 import { useHomeTab } from '../composables/useHomeTab';
+import { Post } from '../types';
+import { Order, getPostsSortOptions, sortArrayOfObjects, PostsSortKey } from '../utils/sort';
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import CategoryImage from './CategoryImage.vue';
 import PostLinkCards from './PostLinkCards.vue';
 
-const { panelItems } = useHomeTab();
-const searchText = inject<Ref<string>>('searchText');
-
-if (searchText) {
-  watchDebounced(
-    searchText,
-    () => {
-      if (searchText.value === '') {
-        panelItems.value.forEach((item) => {
-          item.filteredPosts = item.posts;
-        });
-      } else {
-        const searchStr = searchText.value.toLocaleLowerCase();
-        panelItems.value.forEach((item) => {
-          item.filteredPosts = item.posts.filter((post) => post.title.toLocaleLowerCase().includes(searchStr));
-        });
-      }
-    },
-    { debounce: 500, maxWait: 1000 }
-  );
+interface Props {
+  searchText: string;
+  sortBy: PostsSortKey;
+  order: Order;
 }
+
+const props = defineProps<Props>();
+
+const { panelItems } = useHomeTab();
+
+const sortOption = computed(() => getPostsSortOptions(props.sortBy, props.order));
+const sortPosts = (posts: readonly Post[]) => sortArrayOfObjects(posts, sortOption.value);
+
+watchDebounced(
+  sortOption,
+  () => {
+    panelItems.value.forEach((item) => {
+      item.filteredPosts = sortPosts(item.filteredPosts);
+    });
+  },
+  { debounce: 200, maxWait: 400 }
+);
+
+watchDebounced(
+  () => props.searchText,
+  () => {
+    if (props.searchText === '') {
+      panelItems.value.forEach((item) => {
+        item.filteredPosts = sortPosts(item.posts);
+      });
+    } else {
+      const searchStr = props.searchText.toLocaleLowerCase();
+      panelItems.value.forEach((item) => {
+        const filtered = item.posts.filter((post) => post.title.toLocaleLowerCase().includes(searchStr));
+        item.filteredPosts = sortPosts(filtered);
+      });
+    }
+  },
+  { debounce: 500, maxWait: 1000 }
+);
 
 // TODO: Fix
 const onTabClick = () => {
@@ -63,7 +84,7 @@ const onTabClick = () => {
   width: 100%;
 
   :deep(.p-tabview-nav) {
-    background: var(--surface-ground);
+    background-color: var(--surface-ground);
   }
   :deep(.p-tabview-header) {
     flex-shrink: 0;
