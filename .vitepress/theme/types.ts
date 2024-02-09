@@ -40,11 +40,3 @@ export type SidebarLink = {
   title: string;
   url: string;
 };
-
-export type HomeTabPanelItem = {
-  label: string;
-  category?: string;
-  categoryPriority?: number;
-  posts: Post[];
-  filteredPosts: Post[];
-};

@@ -1,8 +1,16 @@
 import { ref } from 'vue';
 import { useData } from 'vitepress';
 import { data as posts } from '../post.data';
-import { HomeTabPanelItem, ThemeConfig } from '../types';
+import { Post, ThemeConfig } from '../types';
 import { sortArrayOfObjects } from '../utils/sort';
+
+export type HomeTabPanelItem = {
+  label: string;
+  category?: string;
+  categoryPriority?: number;
+  posts: Post[];
+  filteredPosts: Post[];
+};
 
 export const useHomeTab = () => {
   const panelItems = ref<HomeTabPanelItem[]>([{ label: '全て', posts: [...posts], filteredPosts: [...posts] }]);
