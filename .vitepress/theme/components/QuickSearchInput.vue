@@ -1,18 +1,10 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import InputText from 'primevue/inputtext';
-
 import SearchIcon from './icons/SearchIcon.vue';
 import XMarkIcon from './icons/XMarkIcon.vue';
 
-const props = withDefaults(defineProps<{ modelValue?: string }>(), { modelValue: '' });
-
-const emits = defineEmits<{ 'update:modelValue': [value: string] }>();
-
-const inputText = computed({
-  get: () => props.modelValue,
-  set: (value: string) => emits('update:modelValue', value),
-});
+const modelValue = defineModel<string>({ default: '' });
 
 const containerEl = ref<HTMLDivElement>();
 let inputEl: HTMLInputElement | null;
@@ -24,11 +16,11 @@ onMounted(() => {
 });
 
 const onClickXMarkIcon = () => {
-  emits('update:modelValue', '');
+  modelValue.value = '';
   inputEl?.focus();
 };
 
-const showXMarkIcon = computed(() => inputText.value !== '');
+const showXMarkIcon = computed(() => modelValue.value !== '');
 
 const focused = ref(false);
 const onFocus = () => {
@@ -42,7 +34,7 @@ const onFocus = () => {
     <span class="wrapper p-input-icon-left p-input-icon-right">
       <SearchIcon class="search-icon" />
       <XMarkIcon v-if="showXMarkIcon" class="x-mark-icon" @click="onClickXMarkIcon" />
-      <InputText v-model="inputText" class="input-text" placeholder="検索" @focus="onFocus" @blur="focused = false" />
+      <InputText v-model="modelValue" class="input-text" placeholder="検索" @focus="onFocus" @blur="focused = false" />
     </span>
   </div>
 </template>
