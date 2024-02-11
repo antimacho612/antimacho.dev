@@ -1,5 +1,5 @@
 import { useData, withBase } from 'vitepress';
-import { ThemeConfig } from '../types';
+import { Category, ThemeConfig } from '../types';
 import { ensureStartingSlash } from './link';
 
 export const formatDate = (date: Date, includeTime = false): string => {
@@ -25,7 +25,7 @@ export const getCategoryFromPath = (path: string): string | undefined => {
   return matches ? matches[1] : undefined;
 };
 
-export const getCategoryImage = (category?: string): string | undefined => {
+export const getCategoryConfig = (category?: string): Category | undefined => {
   if (!category) {
     return undefined;
   }
@@ -35,15 +35,17 @@ export const getCategoryImage = (category?: string): string | undefined => {
     return undefined;
   }
 
-  const categoryConfig = theme.value.categories[category];
-  if (!categoryConfig) {
-    return undefined;
-  }
+  return theme.value.categories[category];
+};
 
-  const categoryImageSrc = categoryConfig.imageSrc;
-  if (!categoryImageSrc) {
-    return undefined;
-  }
+export const getCategoryLabel = (category?: string): string => {
+  if (!category) return '未分類';
+  const categoryConfig = getCategoryConfig(category);
+  return categoryConfig?.label ?? category;
+};
 
-  return withBase(ensureStartingSlash(categoryImageSrc));
+export const getCategoryImage = (category?: string): string | undefined => {
+  const categoryConfig = getCategoryConfig(category);
+  const categoryImageSrc = categoryConfig?.imageSrc;
+  return categoryImageSrc ? withBase(ensureStartingSlash(categoryImageSrc)) : undefined;
 };

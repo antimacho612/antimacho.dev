@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import type { Post } from '../types';
-import { formatDate } from '../utils/utils';
+import { formatDate, getCategoryLabel } from '../utils/utils';
 import { normalizeLink } from '../utils/link';
 import CategoryImage from './CategoryImage.vue';
 
-defineProps<{ post: Post }>();
+const props = defineProps<{ post: Post }>();
+const categoryLabel = getCategoryLabel(props.post.category);
 </script>
 
 <template>
@@ -17,7 +18,7 @@ defineProps<{ post: Post }>();
     <div class="footer">
       <div class="left">
         <CategoryImage :category="post.category" class="image" />
-        <span class="category">{{ post.category }}</span>
+        <span class="category">{{ categoryLabel }}</span>
       </div>
       <div class="right">
         <p>

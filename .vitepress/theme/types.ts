@@ -1,5 +1,18 @@
 import { PageData } from 'vitepress';
 
+export interface Category {
+  label?: string;
+  /**
+   * カテゴリの並びの優先度（e.g. ホーム画面のタブメニュー）
+   * 数字が大きいカテゴリが前に来る
+   * 無指定の場合は優先度`0`として扱われる
+   * 負数を指定すれば後ろに持って行くことができる
+   * 同じ数字のカテゴリはカテゴリ名の昇順で並ぶ
+   */
+  priority?: number;
+  imageSrc?: string;
+}
+
 export interface ThemeConfig {
   gitHubUrl?: string;
   tableOfContent?: {
@@ -11,18 +24,7 @@ export interface ThemeConfig {
     pattern: string | ((payload: PageData) => string);
   };
   categories?: {
-    [key: string]: {
-      label?: string;
-      /**
-       * カテゴリの並びの優先度（e.g. ホーム画面のタブメニュー）
-       * 数字が大きいカテゴリが前に来る
-       * 無指定の場合は優先度`0`として扱われる
-       * 負数を指定すれば後ろに持って行くことができる
-       * 同じ数字のカテゴリはカテゴリ名の昇順で並ぶ
-       */
-      priority?: number;
-      imageSrc?: string;
-    };
+    [key: string]: Category;
   };
 }
 

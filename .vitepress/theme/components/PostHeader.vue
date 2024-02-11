@@ -1,20 +1,17 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { useData } from 'vitepress';
 import { formatDate, getCategoryFromPath } from '../utils/utils';
 import CategoryImage from './CategoryImage.vue';
 
 const { frontmatter, page } = useData();
 
-const createdAt = computed(
-  () => new Date(frontmatter.value.createdAt ?? frontmatter.value.updatedAt ?? page.value.lastUpdated)
-);
-const createdAtISOString = computed(() => createdAt.value.toISOString());
+const createdAt = new Date(frontmatter.value.createdAt ?? frontmatter.value.updatedAt ?? page.value.lastUpdated);
+const createdAtISOString = createdAt.toISOString();
 
-const updatedAt = computed(() => new Date(frontmatter.value.updatedAt ?? page.value.lastUpdated));
-const updatedAtISOString = computed(() => updatedAt.value.toISOString());
+const updatedAt = new Date(frontmatter.value.updatedAt ?? page.value.lastUpdated);
+const updatedAtISOString = updatedAt.toISOString();
 
-const category = computed(() => getCategoryFromPath(page.value.filePath));
+const category = getCategoryFromPath(page.value.filePath);
 </script>
 
 <template>
