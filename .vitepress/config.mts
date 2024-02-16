@@ -52,6 +52,9 @@ export default withMermaid(
           priority: 100,
           imageSrc: '/icons/general.svg',
         },
+        Git: {
+          imageSrc: '/icons/git.svg',
+        },
         JavaScript: {
           imageSrc: '/icons/javascript.svg',
         },
