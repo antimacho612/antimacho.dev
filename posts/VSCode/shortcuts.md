@@ -1,7 +1,7 @@
 ---
 title: キーボードショートカット
 cratedAt: '2024-01-31T19:19:43+09:00'
-updatedAt: '2024-02-01T01:06:48+09:00'
+updatedAt: '2024-02-16T13:58:40+09:00'
 ---
 
 ※Windows用
@@ -16,7 +16,7 @@ updatedAt: '2024-02-01T01:06:48+09:00'
 | ウィンドウ/インスタンスを閉じる | <KeyCombination :values="['Ctrl', 'Shift', 'W']" /> | |
 | ユーザ設定 | <KeyCombination :values="['Ctrl', ',']" /> | |
 | キーボードショートカット設定画面 | <KeyCombination :values="['Ctrl', 'K']" /> , <KeyCombination :values="['Ctrl', 'S']" /> | |
-| 言語モードを選択 | <KeyCombination :values="['Ctrl', 'K']" /> , <Key value="K" /> | |
+| 言語モードを選択 | <KeyCombination :values="['Ctrl', 'K']" /> , <Key value="M" /> | |
 
 ### サイドバー
 
