@@ -1,19 +1,19 @@
 ---
 title: Gitのコミットメッセージの書き方
 cratedAt: '2024-02-16T15:47:51+09:00'
-updatedAt: '2024-02-16T15:47:51+09:00'
+updatedAt: '2024-02-16T15:56:09+09:00'
 ---
 
 ## フォーマット
 
 [Semantic Commit Messages](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716)に従う。
 
-`<Emoji> <Type>: #<Issue Number> <Title>`
+`<Emoji><Type>: #<Issue Number> <Title>`
 
-- 例: `feat: ✨ #123 ログイン機能の実装をする`
+- 例: `✨feat: #123 ログイン機能の実装をする`
 - `<Type>`と`<Title>`は必須
-- `<Issue Number>`は強く推奨
 - `<Emoji>`は任意
+- `<Issue Number>`は強く推奨
 - Description（スリーライン）は任意
 
 ### `<Emoji>`
