@@ -38,7 +38,7 @@
     "markdown-it": "^14.0.0",
     "markdownlint-cli2": "^0.12.1",
     "mermaid": "^10.7.0",
-    "prettier": "^3.2.4",
+    "prettier": "^3.7.3",
     "sass": "^1.70.0",
     "textlint": "^14.0.0",
     "textlint-rule-ja-no-redundant-expression": "^4.0.1",
