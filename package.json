@@ -28,7 +28,7 @@
     "@rushstack/eslint-patch": "^1.7.0",
     "@types/node": "^20.11.5",
     "@vue/eslint-config-prettier": "^10.2.0",
-    "@vue/eslint-config-typescript": "^12.0.0",
+    "@vue/eslint-config-typescript": "^14.0.0",
     "cspell": "^9.4.0",
     "eslint": "^8.56.0",
     "eslint-plugin-vue": "^9.33.0",
