@@ -48,7 +48,7 @@
     "textlint-rule-prh": "^6.1.0",
     "vitepress": "^1.0.0-rc.42",
     "vitepress-plugin-mermaid": "^2.0.17",
-    "vue": "^3.4.15"
+    "vue": "^3.5.25"
   },
   "dependencies": {
     "@vueuse/core": "^10.7.2",
