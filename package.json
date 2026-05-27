@@ -35,7 +35,7 @@
     "gray-matter": "^4.0.3",
     "husky": "^9.0.7",
     "lint-staged": "^15.2.0",
-    "markdown-it": "^14.0.0",
+    "markdown-it": "^14.1.0",
     "markdownlint-cli2": "^0.19.1",
     "mermaid": "^11.12.2",
     "prettier": "^3.2.4",
