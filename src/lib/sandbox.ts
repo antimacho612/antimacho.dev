@@ -24,7 +24,12 @@ const FRAME_RUNTIME = `
 (function () {
   var last = 0;
   function post() {
-    var height = Math.ceil(document.documentElement.getBoundingClientRect().height);
+    var el = document.documentElement;
+    // html は height:auto なので getBoundingClientRect は中身の高さになる。
+    // scrollHeight だとビューポート高さを下回れず、縮むときに追従できない
+    var height = Math.ceil(el.getBoundingClientRect().height);
+    // 横に溢れているとスクロールバーの分だけ足りなくなり、縦スクロールバーまで出る
+    if (el.scrollWidth > el.clientWidth) height += 16;
     if (height === last) return;
     last = height;
     parent.postMessage({ __sandbox: 'height', value: height }, '*');

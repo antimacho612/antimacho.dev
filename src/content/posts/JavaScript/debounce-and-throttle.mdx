@@ -1,0 +1,77 @@
+---
+title: debounce と throttle の使い分け
+summary: 連続して起きるイベントを間引く 2 つの方法。どちらを選ぶかは「最後だけ欲しいか、一定間隔で欲しいか」で決まる。
+createdAt: 2026-08-16
+tags: [JavaScript, パフォーマンス]
+---
+
+`input` や `scroll` や `resize` は連続して大量に発火する。そのたびに重い処理を
+走らせないための間引き方が debounce と throttle で、**残るタイミングが違う**。
+
+## 動かして違いを見る
+
+入力欄で連打すると、3 本のレーンにイベントの発火がマーカーとして並ぶ。
+待ち時間を変えると間引き方の差がはっきりする。
+
+<Demo id="debounce-vs-throttle" />
+
+- **そのまま** … 入力のたびに発火する
+- **debounce** … 入力が止まって待ち時間が経過したときに 1 回だけ発火する
+- **throttle** … 待ち時間に 1 回までのペースで発火し続ける
+
+## 実装
+
+どちらも「タイマーをどう扱うか」の違いでしかない。
+
+```js
+/** 最後の呼び出しから wait ミリ秒あいたら 1 回だけ実行する */
+function debounce(fn, wait) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), wait);
+  };
+}
+
+/** wait ミリ秒に 1 回までに間引く（先頭で即実行する leading edge 版） */
+function throttle(fn, wait) {
+  let last = 0;
+  return (...args) => {
+    const now = Date.now();
+    if (now - last < wait) return;
+    last = now;
+    fn(...args);
+  };
+}
+```
+
+debounce は呼ばれるたびにタイマーを張り直すので、呼び出しが続く限り実行されない。
+throttle は前回の実行時刻を覚えておき、待ち時間が経つまで新しい呼び出しを捨てる。
+
+<Callout type="warning">
+上の throttle は末尾の呼び出しを捨てる。「最後の 1 回が必ず必要」な用途では、
+待ち時間の終わりにも実行する trailing edge 付きの実装にするか、debounce を使う。
+</Callout>
+
+## どちらを使うか
+
+| 状況 | 選ぶもの | 理由 |
+| --- | --- | --- |
+| 検索ボックスのサジェスト | debounce | 打ち終わった語で 1 回引ければよい |
+| フォームの自動保存 | debounce | 入力が落ち着いてから保存したい |
+| スクロール位置に応じた表示更新 | throttle | 途中経過が要る。止まるまで待てない |
+| ウィンドウリサイズ中の再レイアウト | throttle | 同上。ただし最後に 1 回 debounce も足すとよい |
+
+判断の軸は単純で、**最後の状態だけが欲しいなら debounce、途中経過も一定間隔で欲しいなら throttle** になる。
+
+## 標準機能で足りる場合
+
+スクロールに応じた表示の出し分けは、そもそも `IntersectionObserver` を使えば
+イベントを間引く必要がなくなる。要素のサイズ変化も `ResizeObserver` で受け取れる。
+間引きを書く前に、監視系の API で置き換えられないか考えるとよい。
+
+<LinkCard
+  url="https://developer.mozilla.org/ja/docs/Web/API/Intersection_Observer_API"
+  label="Intersection Observer API - Web API | MDN"
+  description="要素がビューポートに入ったかを、スクロールイベントなしで監視する。"
+/>

@@ -1,0 +1,94 @@
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#clear {
+  border: 1px solid currentColor;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+#clear:hover {
+  opacity: 1;
+}
+
+.source {
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid #a78bfa;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+}
+
+.lanes {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.lane-label {
+  margin: 0 0 4px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.count {
+  display: inline-block;
+  min-width: 1.5em;
+  border-radius: 9999px;
+  padding: 0 6px;
+  text-align: center;
+  background: rgba(139, 92, 246, 0.2);
+}
+
+.track {
+  position: relative;
+  height: 24px;
+  border-radius: 6px;
+  background: rgba(139, 92, 246, 0.1);
+  overflow: hidden;
+}
+
+/* イベント 1 回につきマーカーを 1 本立てる */
+.marker {
+  position: absolute;
+  top: 4px;
+  width: 3px;
+  height: 16px;
+  border-radius: 2px;
+  background: #8b5cf6;
+  animation: fade 3s linear forwards;
+}
+
+.lane[data-lane='debounce'] .marker {
+  background: #10b981;
+}
+
+.lane[data-lane='throttle'] .marker {
+  background: #f97316;
+}
+
+@keyframes fade {
+  to {
+    opacity: 0;
+  }
+}
