@@ -56,8 +56,10 @@ const activeTab = tabs.some((tab) => tab.key === defaultTab) ? defaultTab : 'pre
 ---
 
 <figure class:list={['sandbox', { bleed }]} data-sandbox data-height={height}>
-  {/* ソースは template のテキストとして持たせる。script タグに埋め込まないので
-      デモ側に </script> が含まれていても壊れない */}
+  {
+    /* ソースは template のテキストとして持たせる。script タグに埋め込まないので
+      デモ側に </script> が含まれていても壊れない */
+  }
   {sources.map((source) => <template data-source={source.key} set:text={source.code} />)}
 
   <div class="toolbar">
@@ -78,9 +80,13 @@ const activeTab = tabs.some((tab) => tab.key === defaultTab) ? defaultTab : 'pre
     </div>
 
     <div class="actions">
-      {editable && sources.length > 0 && (
-        <button type="button" class="action" data-action="edit">編集</button>
-      )}
+      {
+        editable && sources.length > 0 && (
+          <button type="button" class="action" data-action="edit">
+            編集
+          </button>
+        )
+      }
       <button type="button" class="action" data-action="run" title="デモを最初から実行し直す">再実行</button>
       <button type="button" class="action" data-action="reset" hidden>リセット</button>
       <button type="button" class="action" data-action="open" title="別タブで開く">↗</button>

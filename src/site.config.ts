@@ -1,4 +1,4 @@
-/** サイト全体の設定。旧 .vitepress/config.mts の themeConfig 相当。 */
+/** サイト全体の設定。 */
 
 export interface CategoryConfig {
   /** 一覧などに表示する名前。省略時はディレクトリ名をそのまま使う */
@@ -34,8 +34,9 @@ export const CATEGORIES: Record<string, CategoryConfig> = {
   General: { label: '一般', priority: -10, iconSrc: '/icons/general.svg' },
 };
 
-export function getCategoryConfig(category: string): Required<Pick<CategoryConfig, 'label' | 'priority'>> &
-  Pick<CategoryConfig, 'iconSrc'> {
+export function getCategoryConfig(
+  category: string
+): Required<Pick<CategoryConfig, 'label' | 'priority'>> & Pick<CategoryConfig, 'iconSrc'> {
   const config = CATEGORIES[category] ?? {};
   return {
     label: config.label ?? category,

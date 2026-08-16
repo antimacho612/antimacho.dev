@@ -1,23 +1,26 @@
 ---
 title: debounce と throttle の使い分け
 summary: 連続して起きるイベントを間引く 2 つの方法。どちらを選ぶかは「最後だけ欲しいか、一定間隔で欲しいか」で決まる。
-createdAt: 2026-08-16
-tags: [JavaScript, パフォーマンス]
+createdAt: 2026-08-16T00:00:00.000Z
+tags:
+  - JavaScript
+  - パフォーマンス
+updatedAt: '2026-08-16T16:40:26+09:00'
 ---
 
-`input` や `scroll` や `resize` は連続して大量に発火する。そのたびに重い処理を
-走らせないための間引き方が debounce と throttle で、**残るタイミングが違う**。
+`input`や`scroll`や`resize`は連続して大量に発火する。そのたびに重い処理を
+走らせないための間引き方がdebounceとthrottleで、**残るタイミングが違う**。
 
 ## 動かして違いを見る
 
-入力欄で連打すると、3 本のレーンにイベントの発火がマーカーとして並ぶ。
+入力欄で連打すると、3本のレーンにイベントの発火がマーカーとして並ぶ。
 待ち時間を変えると間引き方の差がはっきりする。
 
 <Demo id="debounce-vs-throttle" />
 
 - **そのまま** … 入力のたびに発火する
-- **debounce** … 入力が止まって待ち時間が経過したときに 1 回だけ発火する
-- **throttle** … 待ち時間に 1 回までのペースで発火し続ける
+- **debounce** … 入力が止まって待ち時間が経過したときに1回だけ発火する
+- **throttle** … 待ち時間に1回までのペースで発火し続ける
 
 ## 実装
 
@@ -45,8 +48,8 @@ function throttle(fn, wait) {
 }
 ```
 
-debounce は呼ばれるたびにタイマーを張り直すので、呼び出しが続く限り実行されない。
-throttle は前回の実行時刻を覚えておき、待ち時間が経つまで新しい呼び出しを捨てる。
+debounceは呼ばれるたびにタイマーを張り直すので、呼び出しが続く限り実行されない。
+throttleは前回の実行時刻を覚えておき、待ち時間が経つまで新しい呼び出しを捨てる。
 
 <Callout type="warning">
 上の throttle は末尾の呼び出しを捨てる。「最後の 1 回が必ず必要」な用途では、
@@ -66,9 +69,9 @@ throttle は前回の実行時刻を覚えておき、待ち時間が経つま�
 
 ## 標準機能で足りる場合
 
-スクロールに応じた表示の出し分けは、そもそも `IntersectionObserver` を使えば
-イベントを間引く必要がなくなる。要素のサイズ変化も `ResizeObserver` で受け取れる。
-間引きを書く前に、監視系の API で置き換えられないか考えるとよい。
+スクロールに応じた表示の出し分けは、そもそも`IntersectionObserver`を使えば
+イベントを間引く必要がなくなる。要素のサイズ変化も`ResizeObserver`で受け取れる。
+間引きを書く前に、監視系のAPIで置き換えられないか考えるとよい。
 
 <LinkCard
   url="https://developer.mozilla.org/ja/docs/Web/API/Intersection_Observer_API"

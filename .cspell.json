@@ -2,9 +2,7 @@
 {
   "version": "0.2",
   "language": "en",
-  "ignoreRegExpList": [
-    "(https?|file|ftp):[^\\s]*$"
-  ],
+  "ignoreRegExpList": ["(https?|file|ftp):[^\\s]*$"],
   "words": [
     "antimacho",
     "BSON",
@@ -57,11 +55,11 @@
     "cache",
     "dist",
     "node_modules",
+    ".astro",
     ".husky",
     ".vscode",
     ".cspell.json",
     ".editorconfig",
-    ".eslintrc.cjs",
     ".gitignore",
     ".markdownlint-cli2.jsonc",
     ".prettierrc.cjs",

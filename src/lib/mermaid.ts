@@ -40,9 +40,7 @@ export async function setupMermaid(): Promise<void> {
         const { svg } = await mermaid.render(`mermaid-${sequence++}`, source);
         target.innerHTML = svg;
       } catch (error: unknown) {
-        target.textContent = `Mermaid の描画に失敗しました: ${
-          error instanceof Error ? error.message : String(error)
-        }`;
+        target.textContent = `Mermaid の描画に失敗しました: ${error instanceof Error ? error.message : String(error)}`;
       }
     }
   };

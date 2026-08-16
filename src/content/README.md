@@ -81,3 +81,9 @@ npm run build   # ビルドが通るか
 
 textlint / markdownlint は `npm run lint:text` / `npm run lint:markdown` で個別に走る
 （コミット時に lint-staged からも自動で走る）。
+
+> [!CAUTION]
+> `textlint --fix` は **JSX の中身まで書き換えることがある**。textlint の markdown
+> パーサーは MDX を理解せず、コンポーネントの props に書いたテンプレートリテラルを
+> 散文とみなすことがあるため。実行したら必ず `git diff` で確認すること。
+> lint-staged から走るのは報告のみ（`--fix` なし）なので、コミット時は書き換わらない。

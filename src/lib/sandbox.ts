@@ -184,9 +184,7 @@ function setEditing(sandbox: Sandbox, editing: boolean): void {
     editor.hidden = !editing;
   }
 
-  sandbox.root
-    .querySelector<HTMLButtonElement>('[data-action="edit"]')
-    ?.classList.toggle('is-active', editing);
+  sandbox.root.querySelector<HTMLButtonElement>('[data-action="edit"]')?.classList.toggle('is-active', editing);
   const reset = sandbox.root.querySelector<HTMLButtonElement>('[data-action="reset"]');
   if (reset) reset.hidden = !editing;
 
@@ -272,8 +270,7 @@ export function setupCompares(): void {
     };
 
     root.addEventListener('click', (event) => {
-      const action = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-action]')?.dataset
-        .action;
+      const action = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-action]')?.dataset.action;
       if (action === 'run') runAll();
     });
 

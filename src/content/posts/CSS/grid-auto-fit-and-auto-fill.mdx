@@ -1,28 +1,31 @@
 ---
 title: Grid の auto-fit と auto-fill の違い
 summary: repeat() に渡す auto-fit と auto-fill は、要素が足りないときの挙動だけが違う。
-createdAt: 2026-08-16
-tags: [CSS, Grid]
+createdAt: 2026-08-16T00:00:00.000Z
+tags:
+  - CSS
+  - Grid
+updatedAt: '2026-08-16T16:40:26+09:00'
 ---
 
 ## まず動かして確かめる
 
-`repeat(auto-fit, minmax(140px, 1fr))` は「最低 140px を確保しつつ、入るだけ列を作る」
-という指定になる。最小幅を変えると列数が変わり、`auto-fill` に切り替えると
+`repeat(auto-fit, minmax(140px, 1fr))`は「最低140pxを確保しつつ、入るだけ列を作る」
+という指定になる。最小幅を変えると列数が変わり、`auto-fill`に切り替えると
 要素が足りないときの挙動が変わる。
 
 <Demo id="grid-auto-fit" />
 
 ## 違いが出るのは要素が足りないときだけ
 
-コンテナに対して要素の数が十分なら、`auto-fit` と `auto-fill` の結果は同じになる。
+コンテナに対して要素の数が十分なら、`auto-fit`と`auto-fill`の結果は同じになる。
 違いが出るのは**列を作れる余地があるのに要素が足りない**ときで、
 
 - `auto-fill` … 空のトラックをそのまま残す。だから既存の要素は伸びない
 - `auto-fit` … 空のトラックを畳む。畳まれた分の幅を既存の要素が受け取って伸びる
 
 <Compare
-  title="要素 2 つに対して 4 列ぶんの余地があるとき"
+  title="要素2つに対して4列ぶんの余地があるとき"
   html={`<div class="grid">
   <div class="cell">1</div>
   <div class="cell">2</div>
@@ -45,8 +48,8 @@ tags: [CSS, Grid]
 
 ## どちらを使うか
 
-カードの一覧のように**要素を目一杯広げたい**なら `auto-fit`。
-グリッドの列位置を保ちたい（少ない要素でも左寄せのまま並べたい）なら `auto-fill` を選ぶ。
+カードの一覧のように**要素を目一杯広げたい**なら`auto-fit`。
+グリッドの列位置を保ちたい（少ない要素でも左寄せのまま並べたい）なら`auto-fill`を選ぶ。
 
 ```css
 /* 余った幅をカードに配りたい */

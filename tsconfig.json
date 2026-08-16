@@ -9,5 +9,5 @@
     }
   },
   "include": [".astro/types.d.ts", "src/**/*", "astro.config.mjs"],
-  "exclude": ["dist", "node_modules", ".vitepress"]
+  "exclude": ["dist", "node_modules"]
 }

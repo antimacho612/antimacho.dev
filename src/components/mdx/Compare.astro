@@ -42,16 +42,7 @@ interface Props {
   bleed?: boolean;
 }
 
-const {
-  variants,
-  html = '',
-  css = '',
-  js = '',
-  title,
-  height,
-  showCode = true,
-  bleed = false,
-} = Astro.props;
+const { variants, html = '', css = '', js = '', title, height, showCode = true, bleed = false } = Astro.props;
 
 const resolved = variants.map((variant) => ({
   label: variant.label,

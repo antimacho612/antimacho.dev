@@ -18,11 +18,7 @@ const isUpdated = post.updatedAt.getTime() !== post.createdAt.getTime();
 
   <div class="meta">
     <time datetime={post.createdAt.toISOString()}>作成 {formatDate(post.createdAt)}</time>
-    {
-      isUpdated && (
-        <time datetime={post.updatedAt.toISOString()}>更新 {formatDate(post.updatedAt)}</time>
-      )
-    }
+    {isUpdated && <time datetime={post.updatedAt.toISOString()}>更新 {formatDate(post.updatedAt)}</time>}
   </div>
 
   {

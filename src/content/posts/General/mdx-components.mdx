@@ -1,17 +1,20 @@
 ---
 title: 記事で使えるコンポーネント
 summary: 記事（.mdx）の中で import なしに使えるコンポーネントの一覧と書き方。
-createdAt: 2026-08-16
-tags: [執筆, MDX]
+createdAt: 2026-08-16T00:00:00.000Z
+tags:
+  - 執筆
+  - MDX
+updatedAt: '2026-08-16T16:40:26+09:00'
 ---
 
-記事は `src/content/posts/<カテゴリ>/<スラッグ>.mdx` に置く。
+記事は`src/content/posts/<カテゴリ>/<スラッグ>.mdx`に置く。
 以下のコンポーネントは **import せずにそのまま使える**（記事ページが渡している）。
 
 ## Sandbox
 
-HTML / CSS / JS のデモを記事に直接書く。プレビューは iframe で隔離されるので、
-デモの CSS が記事のスタイルを壊すことはない。
+HTML / CSS / JSのデモを記事に直接書く。プレビューはiframeで隔離されるので、
+デモのCSSが記事のスタイルを壊すことはない。
 
 <Sandbox
   title="ホバーで拡大する"
@@ -44,8 +47,8 @@ HTML / CSS / JS のデモを記事に直接書く。プレビューは iframe �
 
 ## Demo
 
-行数が増えるデモは `src/demos/<id>/` にファイルとして置き、id で参照する。
-エディタの補完と整形が効くので、JS を伴うデモはこちらが書きやすい。
+行数が増えるデモは`src/demos/<id>/`にファイルとして置き、idで参照する。
+エディタの補完と整形が効くので、JSを伴うデモはこちらが書きやすい。
 
 ```txt
 src/demos/grid-auto-fit/
@@ -62,10 +65,10 @@ src/demos/grid-auto-fit/
 
 ## Compare
 
-同じマークアップに別々の CSS を当てて並べる。CSS の解説で使う。
+同じマークアップに別々のCSSを当てて並べる。CSSの解説で使う。
 
 <Compare
-  title="box-sizing の違い（どちらも width: 160px 指定）"
+  title="box-sizingの違い（どちらもwidth: 160px指定）"
   html={`<div class="box">160px + padding</div>`}
   css={`.box {
   width: 160px;
@@ -82,7 +85,7 @@ src/demos/grid-auto-fit/
 
 ## Callout
 
-補足や注意の囲み。`type` は `note` / `info` / `tip` / `warning` / `danger`。
+補足や注意の囲み。`type`は`note` / `info` / `tip` / `warning` / `danger`。
 
 <Callout type="info" title="補足">
 `title` を省略すると `type` に応じた既定の文言になる。
@@ -112,7 +115,7 @@ src/demos/grid-auto-fit/
 
 ## Mermaid
 
-図は `chart` に渡す。テーマ切り替えに追従して描き直される。
+図は`chart`に渡す。テーマ切り替えに追従して描き直される。
 
 <Mermaid
   title="記事が表示されるまで"

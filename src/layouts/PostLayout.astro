@@ -84,9 +84,7 @@ const { post, headings } = Astro.props;
 <script>
   // Markdown プロセッサは見出しに id を振るがアンカーリンクは付けないため、
   // ここで補う（プロセッサのプラグインに依存させないための実装）。
-  for (const heading of document.querySelectorAll<HTMLElement>(
-    '.prose :is(h2, h3, h4, h5, h6)[id]'
-  )) {
+  for (const heading of document.querySelectorAll<HTMLElement>('.prose :is(h2, h3, h4, h5, h6)[id]')) {
     const anchor = document.createElement('a');
     anchor.className = 'header-anchor';
     anchor.href = `#${heading.id}`;

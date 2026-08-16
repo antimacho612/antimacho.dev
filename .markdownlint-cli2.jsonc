@@ -4,16 +4,8 @@
     "fenced-code-language": false,
     "line-length": false,
     "no-bare-urls": false,
-    "no-inline-html": {
-      "allowed_elements": [
-        "br",
-        "img",
-        // Global Components
-        "Badge",
-        "Key",
-        "KeyCombination",
-        "LinkCard"
-      ]
-    }
+    // 記事は .mdx で、コンポーネントの props に渡す HTML 片も含まれる。
+    // 素の markdown 前提のルールなので丸ごと無効にする
+    "no-inline-html": false
   }
 }
