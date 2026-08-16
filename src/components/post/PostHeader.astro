@@ -9,7 +9,8 @@ interface Props {
 
 const { post } = Astro.props;
 const category = getCategoryConfig(post.category);
-const isUpdated = post.updatedAt.getTime() !== post.createdAt.getTime();
+// 時刻まで比べると、作成と同じ日の更新でも「更新」が出てしまう
+const isUpdated = formatDate(post.updatedAt) !== formatDate(post.createdAt);
 ---
 
 <header class="post-header">

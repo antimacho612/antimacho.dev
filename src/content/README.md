@@ -23,8 +23,8 @@ URL は小文字化される（`CSS/foo.mdx` → `/posts/css/foo`）が、表示
 ---
 title: コンテナクエリの基本        # 必須
 summary: 一覧カードに出る 1〜2 行の説明   # 任意だが書くこと
-createdAt: 2026-08-16              # 必須
-updatedAt: 2026-08-20              # 任意。省略時は createdAt と同じ扱い
+createdAt: '2026-08-16'            # 必須。コミット時に scripts/updateFrontmatter が補う
+updatedAt: '2026-08-20'            # 任意。2 回目以降のコミットで自動更新される
 tags: [CSS, レスポンシブ]           # 任意
 draft: false                       # true にすると本番ビルドから外れる
 ---
