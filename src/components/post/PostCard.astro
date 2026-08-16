@@ -36,6 +36,10 @@ const category = getCategoryConfig(post.category);
       transform var(--transition-duration);
   }
 
+  .card[hidden] {
+    display: none;
+  }
+
   .card:hover {
     border-color: var(--primary-color);
     box-shadow: var(--shadow-2);
