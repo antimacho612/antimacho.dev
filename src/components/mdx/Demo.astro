@@ -1,0 +1,34 @@
+---
+import Sandbox from './Sandbox.astro';
+import { getDemo } from '../../lib/demos';
+
+/**
+ * src/demos/<id>/ に置いたデモを埋め込む。
+ *
+ * 行数が増えるデモや、エディタの補完・整形を効かせたいデモはこちら。
+ * 短いものは <Sandbox> に直接書いたほうが記事として読みやすい。
+ *
+ * ```mdx
+ * <Demo id="grid-auto-fit" />
+ * ```
+ *
+ * demo.json の設定は props で個別に上書きできる。
+ */
+interface Props {
+  id: string;
+  title?: string;
+  height?: number;
+  defaultTab?: 'preview' | 'html' | 'css' | 'js';
+  editable?: boolean;
+  bleed?: boolean;
+}
+
+const { id, ...overrides } = Astro.props;
+const demo = getDemo(id);
+
+// undefined の props で demo.json の設定を潰さないよう、明示された分だけ重ねる
+const defined = Object.fromEntries(Object.entries(overrides).filter(([, value]) => value !== undefined));
+const options = { ...demo.meta, ...defined };
+---
+
+<Sandbox html={demo.html} css={demo.css} js={demo.js} {...options} />

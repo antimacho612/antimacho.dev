@@ -1,0 +1,4 @@
+{
+  "title": "最小幅を変えると列数が変わる。要素が足りないとき auto-fill は空トラックを残し、auto-fit は畳む",
+  "bleed": true
+}

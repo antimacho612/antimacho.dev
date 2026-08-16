@@ -1,0 +1,263 @@
+---
+import { Code } from 'astro:components';
+import { SHIKI_THEMES } from '../../lib/shiki';
+
+/**
+ * 記事中に HTML / CSS / JS の動くデモを埋め込む。
+ *
+ * プレビューは iframe（srcdoc + sandbox="allow-scripts allow-forms"）で隔離するため、
+ * デモの CSS が記事のスタイルを壊すことはない。同時にコードも並べて表示でき、
+ * その場で書き換えて再実行できる。
+ *
+ * ```mdx
+ * <Sandbox
+ *   title="ホバーで拡大する"
+ *   html={`<div class="box">hover me</div>`}
+ *   css={`.box { transition: transform .3s ease; }
+ *         .box:hover { transform: scale(1.2); }`}
+ * />
+ * ```
+ */
+interface Props {
+  html?: string;
+  css?: string;
+  js?: string;
+  /** デモの説明。図のキャプションとして下に出る */
+  title?: string;
+  /** プレビューの高さ(px)。未指定なら中身の高さに追従する */
+  height?: number;
+  /** 最初に開くタブ */
+  defaultTab?: 'preview' | 'html' | 'css' | 'js';
+  /** コードの編集を許可する */
+  editable?: boolean;
+  /** 本文幅を超えて左右に広げる */
+  bleed?: boolean;
+}
+
+const {
+  html = '',
+  css = '',
+  js = '',
+  title,
+  height,
+  defaultTab = 'preview',
+  editable = true,
+  bleed = false,
+} = Astro.props;
+
+const sources = [
+  { key: 'html', label: 'HTML', lang: 'html' as const, code: html },
+  { key: 'css', label: 'CSS', lang: 'css' as const, code: css },
+  { key: 'js', label: 'JS', lang: 'js' as const, code: js },
+].filter((source) => source.code.trim() !== '');
+
+const tabs = [{ key: 'preview', label: 'プレビュー' }, ...sources];
+const activeTab = tabs.some((tab) => tab.key === defaultTab) ? defaultTab : 'preview';
+---
+
+<figure class:list={['sandbox', { bleed }]} data-sandbox data-height={height}>
+  {/* ソースは template のテキストとして持たせる。script タグに埋め込まないので
+      デモ側に </script> が含まれていても壊れない */}
+  {sources.map((source) => <template data-source={source.key} set:text={source.code} />)}
+
+  <div class="toolbar">
+    <div class="tabs" role="tablist">
+      {
+        tabs.map((tab) => (
+          <button
+            type="button"
+            role="tab"
+            class:list={['tab', { 'is-active': tab.key === activeTab }]}
+            aria-selected={tab.key === activeTab ? 'true' : 'false'}
+            data-tab={tab.key}
+          >
+            {tab.label}
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="actions">
+      {editable && sources.length > 0 && (
+        <button type="button" class="action" data-action="edit">編集</button>
+      )}
+      <button type="button" class="action" data-action="run" title="デモを最初から実行し直す">再実行</button>
+      <button type="button" class="action" data-action="reset" hidden>リセット</button>
+      <button type="button" class="action" data-action="open" title="別タブで開く">↗</button>
+    </div>
+  </div>
+
+  <div class="panels">
+    <div class="panel is-active" data-panel="preview">
+      <iframe
+        class="frame"
+        data-frame
+        title={title ?? 'デモ'}
+        sandbox="allow-scripts allow-forms"
+        style={height ? `height: ${height}px` : undefined}></iframe>
+    </div>
+
+    {
+      sources.map((source) => (
+        <div class="panel" data-panel={source.key}>
+          <div class="code" data-code>
+            <Code code={source.code} lang={source.lang} themes={SHIKI_THEMES} defaultColor="light" />
+          </div>
+          <textarea
+            class="editor"
+            data-editor={source.key}
+            spellcheck="false"
+            aria-label={`${source.label} を編集`}
+            hidden
+            set:text={source.code}
+          />
+        </div>
+      ))
+    }
+  </div>
+
+  {title && <figcaption class="caption">{title}</figcaption>}
+</figure>
+
+<style>
+  .sandbox {
+    /* margin-inline は prose.css の .bleed が設定する。ここで上書きしない */
+    margin-block: 1.5rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 0.75rem;
+    background-color: var(--surface-card);
+    overflow: hidden;
+  }
+
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.375rem 0.5rem;
+    border-bottom: 1px solid var(--surface-border);
+    background-color: var(--surface-50);
+  }
+
+  .tabs {
+    display: flex;
+    gap: 0.125rem;
+    min-width: 0;
+    overflow-x: auto;
+  }
+
+  .tab {
+    flex-shrink: 0;
+    border-radius: var(--border-radius);
+    padding: 0.3rem 0.7rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-color-secondary);
+    transition:
+      color var(--transition-duration),
+      background-color var(--transition-duration);
+  }
+
+  .tab:hover {
+    color: var(--text-color);
+    background-color: var(--surface-hover);
+  }
+
+  .tab.is-active {
+    color: var(--primary-color);
+    background-color: var(--highlight-bg);
+  }
+
+  .actions {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.125rem;
+  }
+
+  .action {
+    border-radius: var(--border-radius);
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+    color: var(--text-color-secondary);
+    transition:
+      color var(--transition-duration),
+      background-color var(--transition-duration);
+  }
+
+  .action:hover {
+    color: var(--text-color);
+    background-color: var(--surface-hover);
+  }
+
+  .action.is-active {
+    color: var(--primary-color);
+    background-color: var(--highlight-bg);
+  }
+
+  .panel {
+    display: none;
+  }
+
+  .panel.is-active {
+    display: block;
+  }
+
+  .frame {
+    width: 100%;
+    height: 160px;
+    border: 0;
+    background-color: var(--surface-0);
+  }
+
+  /* コード表示。prose.css の pre 装飾が効かないよう、ここで閉じた見た目にする */
+  .code :global(pre) {
+    margin: 0;
+    border-radius: 0;
+    padding: 1rem 0;
+    max-height: 24rem;
+    overflow: auto;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+  }
+
+  .code :global(pre code) {
+    display: block;
+    width: fit-content;
+    min-width: 100%;
+    padding-inline: 1rem;
+  }
+
+  .editor {
+    display: block;
+    width: 100%;
+    min-height: 12rem;
+    max-height: 24rem;
+    padding: 1rem;
+    font-family: var(--font-family-mono);
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: var(--text-color);
+    background-color: var(--surface-0);
+    resize: vertical;
+    tab-size: 2;
+  }
+
+  .editor:focus-visible {
+    outline: 0 none;
+    box-shadow: none;
+  }
+
+  .caption {
+    padding: 0.5rem 0.875rem;
+    border-top: 1px solid var(--surface-border);
+    font-size: 0.8125rem;
+    color: var(--text-color-secondary);
+    background-color: var(--surface-50);
+  }
+</style>
+
+<script>
+  import { setupSandboxes } from '../../lib/sandbox';
+
+  setupSandboxes();
+</script>
