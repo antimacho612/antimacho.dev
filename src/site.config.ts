@@ -17,8 +17,8 @@ export const SITE = {
   description: 'antimacho の技術メモ',
   lang: 'ja',
   githubUrl: 'https://github.com/antimacho612/antimacho.dev/',
-  /** 記事の「GitHub で編集する」リンク。:path は content/posts からの相対パスに置換される */
-  editLinkPattern: 'https://github.com/antimacho612/antimacho.dev/blob/main/src/content/posts/:path',
+  /** 記事の「GitHub で編集する」リンク。:path はリポジトリルートからの相対パスに置換される */
+  editLinkPattern: 'https://github.com/antimacho612/antimacho.dev/blob/main/:path',
   editLinkText: 'このページを GitHub で編集する',
 } as const;
 

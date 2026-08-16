@@ -1,0 +1,156 @@
+---
+import { getPosts, groupByCategory } from '../../lib/posts';
+
+interface Props {
+  /** ハイライトする記事の URL（base 込み） */
+  currentUrl?: string;
+}
+
+const { currentUrl } = Astro.props;
+const groups = groupByCategory(await getPosts());
+---
+
+<div class="backdrop" data-sidebar-backdrop></div>
+
+<aside class="sidebar" data-sidebar>
+  <nav class="nav">
+    {
+      groups.map((group) => (
+        <section class="group">
+          <a class="group-title" href={group.url}>
+            {group.label}
+          </a>
+          <ul>
+            {group.posts.map((post) => (
+              <li>
+                <a class:list={['link', { 'is-current': post.url === currentUrl }]} href={post.url}>
+                  {post.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </nav>
+</aside>
+
+<style>
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    padding: calc(var(--global-header-height) + 1rem) 1rem 2rem;
+    background-color: var(--surface-ground);
+    border-right: 1px solid var(--surface-border);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    z-index: var(--z-index-sidebar);
+    transform: translateX(-100%);
+    transition: transform var(--transition-duration);
+  }
+
+  .sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: var(--maskbg);
+    opacity: 0;
+    visibility: hidden;
+    z-index: var(--z-index-backdrop);
+    transition:
+      opacity var(--transition-duration),
+      visibility var(--transition-duration);
+  }
+
+  .backdrop.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* 広い画面では常時表示。ドロワーとしての開閉は不要になる */
+  @media (min-width: 1024px) {
+    .sidebar {
+      transform: translateX(0);
+    }
+
+    .backdrop {
+      display: none;
+    }
+  }
+
+  .group + .group {
+    margin-top: 1.5rem;
+  }
+
+  .group-title {
+    display: block;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--text-color-secondary);
+    text-transform: uppercase;
+  }
+
+  .group-title:hover {
+    color: var(--primary-color);
+  }
+
+  .group ul {
+    margin-top: 0.25rem;
+  }
+
+  .link {
+    display: block;
+    border-radius: var(--border-radius);
+    padding: 0.4rem 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--text-color);
+    transition:
+      color var(--transition-duration),
+      background-color var(--transition-duration);
+  }
+
+  .link:hover {
+    background-color: var(--surface-hover);
+    color: var(--primary-color);
+  }
+
+  .link.is-current {
+    color: var(--primary-color);
+    background-color: var(--highlight-bg);
+    font-weight: 600;
+  }
+</style>
+
+<script>
+  const sidebar = document.querySelector('[data-sidebar]');
+  const backdrop = document.querySelector('[data-sidebar-backdrop]');
+
+  function setOpen(open: boolean) {
+    sidebar?.classList.toggle('is-open', open);
+    backdrop?.classList.toggle('is-open', open);
+  }
+
+  document.querySelector('[data-sidebar-toggle]')?.addEventListener('click', () => {
+    setOpen(!sidebar?.classList.contains('is-open'));
+  });
+
+  backdrop?.addEventListener('click', () => setOpen(false));
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setOpen(false);
+  });
+
+  // 記事リンクを押したらドロワーは閉じる（同一ページ内アンカーの場合に備えて）
+  sidebar?.addEventListener('click', (event) => {
+    if ((event.target as HTMLElement).closest('a')) setOpen(false);
+  });
+</script>

@@ -1,0 +1,99 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+  /** 目次に含める見出しレベル */
+  minDepth?: number;
+  maxDepth?: number;
+}
+
+const { headings, minDepth = 2, maxDepth = 4 } = Astro.props;
+
+const items = headings.filter((h) => h.depth >= minDepth && h.depth <= maxDepth);
+---
+
+{
+  items.length > 0 && (
+    <nav class="toc" aria-label="目次" data-toc>
+      <p class="toc-title">目次</p>
+      <ul>
+        {items.map((heading) => (
+          <li style={`--depth: ${heading.depth - minDepth}`}>
+            <a class="toc-link" href={`#${heading.slug}`} data-toc-link={heading.slug}>
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<style>
+  .toc {
+    font-size: 0.8125rem;
+  }
+
+  .toc-title {
+    margin-bottom: 0.5rem;
+    padding-left: 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--text-color-secondary);
+    text-transform: uppercase;
+  }
+
+  .toc-link {
+    display: block;
+    border-left: 2px solid var(--surface-border);
+    padding: 0.3rem 0.75rem;
+    padding-left: calc(0.75rem + var(--depth) * 0.75rem);
+    line-height: 1.5;
+    color: var(--text-color-secondary);
+    transition:
+      color var(--transition-duration),
+      border-color var(--transition-duration);
+  }
+
+  .toc-link:hover {
+    color: var(--text-color);
+  }
+
+  .toc-link.is-active {
+    color: var(--primary-color);
+    border-left-color: var(--primary-color);
+  }
+</style>
+
+<script>
+  const links = new Map<string, HTMLAnchorElement>();
+  for (const link of document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')) {
+    links.set(link.dataset.tocLink!, link);
+  }
+
+  if (links.size > 0) {
+    const headings = [...links.keys()]
+      .map((slug) => document.getElementById(slug))
+      .filter((element): element is HTMLElement => element !== null);
+
+    const setActive = (slug: string | undefined) => {
+      for (const [key, link] of links) link.classList.toggle('is-active', key === slug);
+    };
+
+    // 画面上端（ヘッダーのすぐ下）を通過した最後の見出しを現在地とする
+    const update = () => {
+      const threshold = 100;
+      let current: string | undefined;
+      for (const heading of headings) {
+        if (heading.getBoundingClientRect().top <= threshold) current = heading.id;
+        else break;
+      }
+      setActive(current ?? headings[0]?.id);
+    };
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+  }
+</script>

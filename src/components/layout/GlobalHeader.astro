@@ -1,20 +1,33 @@
 ---
 import { SITE } from '../../site.config';
 import { withBase } from '../../lib/url';
+import Bars3Icon from '../icons/Bars3Icon.astro';
 import GitHubIcon from '../icons/GitHubIcon.astro';
 import ThemeToggle from './ThemeToggle.astro';
 
 interface Props {
   /** ホームではスクロールしてもすりガラス化しない */
   isHome?: boolean;
+  /** サイドバーを持つページではメニューボタンを出す（狭い画面のみ表示） */
+  hasSidebar?: boolean;
 }
 
-const { isHome = false } = Astro.props;
+const { isHome = false, hasSidebar = false } = Astro.props;
 ---
 
 <header class:list={['global-header', { 'is-home': isHome }]} data-global-header>
   <div class="body">
-    <a class="title" href={withBase('/')}>{SITE.title}</a>
+    <div class="left">
+      {
+        hasSidebar && (
+          <button type="button" class="menu-button" data-sidebar-toggle>
+            <Bars3Icon class="menu-icon" />
+            <span class="visually-hidden">メニューを開く</span>
+          </button>
+        )
+      }
+      <a class="title" href={withBase('/')}>{SITE.title}</a>
+    </div>
 
     <div class="actions">
       <ThemeToggle />
@@ -53,6 +66,43 @@ const { isHome = false } = Astro.props;
     align-items: center;
     justify-content: space-between;
     height: 100%;
+  }
+
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  .menu-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    color: var(--text-color-secondary);
+    transition:
+      color var(--transition-duration),
+      background-color var(--transition-duration);
+  }
+
+  .menu-button:hover {
+    color: var(--text-color);
+    background-color: var(--surface-hover);
+  }
+
+  .menu-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  /* サイドバーが常時表示される幅ではメニューボタンは不要 */
+  @media (min-width: 1024px) {
+    .menu-button {
+      display: none;
+    }
   }
 
   .title {

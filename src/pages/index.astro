@@ -1,36 +1,133 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/post/PostCard.astro';
 import { SITE } from '../site.config';
+import { getPosts, groupByCategory } from '../lib/posts';
 
-// ステップ 3 で記事一覧・カテゴリタブを持つホーム画面に置き換える。
+const posts = await getPosts();
+const groups = groupByCategory(posts);
 ---
 
 <BaseLayout isHome>
-  <div class="hero">
-    <h1 class="hero-title">{SITE.title}</h1>
-    <p class="hero-description">{SITE.description}</p>
+  <div class="home">
+    <div class="hero">
+      <h1 class="hero-title">{SITE.title}</h1>
+      <p class="hero-description">{SITE.description}</p>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button type="button" class="tab is-active" role="tab" aria-selected="true" data-tab="all">
+        すべて
+        <span class="count">{posts.length}</span>
+      </button>
+      {
+        groups.map((group) => (
+          <button type="button" class="tab" role="tab" aria-selected="false" data-tab={group.categorySlug}>
+            {group.label}
+            <span class="count">{group.posts.length}</span>
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="cards">
+      {posts.map((post) => <PostCard post={post} />)}
+    </div>
+
+    {posts.length === 0 && <p class="empty">まだ記事がありません。</p>}
   </div>
 </BaseLayout>
 
 <style>
-  .hero {
-    max-width: var(--content-max-width);
+  .home {
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 4rem 1.5rem;
+    padding: 3rem 1.5rem 4rem;
   }
 
   .hero-title {
+    width: fit-content;
     font-size: 2.5rem;
     font-weight: 700;
+    letter-spacing: -0.02em;
     background: var(--title-gradient);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    width: fit-content;
   }
 
   .hero-description {
     margin-top: 0.75rem;
     color: var(--text-color-secondary);
   }
+
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 2.5rem 0 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--surface-border);
+  }
+
+  .tab {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-radius: 9999px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-color-secondary);
+    transition:
+      color var(--transition-duration),
+      background-color var(--transition-duration);
+  }
+
+  .tab:hover {
+    background-color: var(--surface-hover);
+    color: var(--text-color);
+  }
+
+  .tab.is-active {
+    color: var(--primary-color);
+    background-color: var(--highlight-bg);
+  }
+
+  .count {
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
+
+  .cards {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+
+  .empty {
+    margin-top: 2rem;
+    color: var(--text-color-secondary);
+  }
 </style>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('[data-tab]');
+  const cards = document.querySelectorAll<HTMLElement>('[data-category]');
+
+  for (const tab of tabs) {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab!;
+
+      for (const other of tabs) {
+        const isActive = other === tab;
+        other.classList.toggle('is-active', isActive);
+        other.setAttribute('aria-selected', String(isActive));
+      }
+
+      for (const card of cards) {
+        card.hidden = target !== 'all' && card.dataset.category !== target;
+      }
+    });
+  }
+</script>

@@ -1,0 +1,88 @@
+---
+import type { MarkdownHeading } from 'astro';
+import BaseLayout from './BaseLayout.astro';
+import Sidebar from '../components/layout/Sidebar.astro';
+import TableOfContents from '../components/post/TableOfContents.astro';
+import PostHeader from '../components/post/PostHeader.astro';
+import PostFooter from '../components/post/PostFooter.astro';
+import type { Post } from '../lib/posts';
+import '../styles/prose.css';
+
+interface Props {
+  post: Post;
+  headings: MarkdownHeading[];
+}
+
+const { post, headings } = Astro.props;
+---
+
+<BaseLayout title={post.title} description={post.summary} hasSidebar>
+  <Sidebar currentUrl={post.url} />
+
+  <div class="post-shell">
+    <article class="prose">
+      <PostHeader post={post} />
+      <slot />
+      <PostFooter post={post} />
+    </article>
+
+    <div class="toc-rail">
+      <TableOfContents headings={headings} />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .post-shell {
+    /* 左右の固定レールの合計幅。prose.css の .bleed がはみ出し量の計算に使う */
+    --rails: 0px;
+
+    padding-block: 2rem 4rem;
+  }
+
+  .toc-rail {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .post-shell {
+      --rails: var(--sidebar-width);
+
+      padding-left: var(--sidebar-width);
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .post-shell {
+      --rails: calc(var(--sidebar-width) + var(--toc-width));
+
+      padding-right: var(--toc-width);
+    }
+
+    .toc-rail {
+      display: block;
+      position: fixed;
+      top: calc(var(--global-header-height) + 1.5rem);
+      right: 0;
+      width: var(--toc-width);
+      max-height: calc(100vh - var(--global-header-height) - 3rem);
+      padding-right: 1rem;
+      overflow-y: auto;
+    }
+  }
+</style>
+
+<script>
+  // Markdown プロセッサは見出しに id を振るがアンカーリンクは付けないため、
+  // ここで補う（プロセッサのプラグインに依存させないための実装）。
+  for (const heading of document.querySelectorAll<HTMLElement>(
+    '.prose :is(h2, h3, h4, h5, h6)[id]'
+  )) {
+    const anchor = document.createElement('a');
+    anchor.className = 'header-anchor';
+    anchor.href = `#${heading.id}`;
+    anchor.textContent = '#';
+    anchor.setAttribute('aria-label', `${heading.textContent} へのリンク`);
+    heading.prepend(anchor);
+  }
+</script>

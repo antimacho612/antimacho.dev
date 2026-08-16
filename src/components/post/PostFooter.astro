@@ -1,0 +1,39 @@
+---
+import { SITE } from '../../site.config';
+import type { Post } from '../../lib/posts';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+// filePath はリポジトリルートからの相対パス（例: src/content/posts/CSS/foo.mdx）
+const editUrl = post.entry.filePath ? SITE.editLinkPattern.replace(':path', post.entry.filePath) : undefined;
+---
+
+<footer class="post-footer">
+  {
+    editUrl && (
+      <a class="edit-link" href={editUrl} target="_blank" rel="noopener">
+        {SITE.editLinkText}
+      </a>
+    )
+  }
+</footer>
+
+<style>
+  .post-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--surface-border);
+  }
+
+  .edit-link {
+    font-size: 0.875rem;
+    color: var(--primary-color);
+  }
+
+  .edit-link:hover {
+    text-decoration: underline;
+  }
+</style>

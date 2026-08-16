@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Sidebar from '../../components/layout/Sidebar.astro';
+import PostCard from '../../components/post/PostCard.astro';
+import { getPosts, groupByCategory, type CategoryGroup } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const groups = groupByCategory(await getPosts());
+  return groups.map((group) => ({ params: { category: group.categorySlug }, props: { group } }));
+}
+
+interface Props {
+  group: CategoryGroup;
+}
+
+const { group } = Astro.props;
+---
+
+<BaseLayout title={group.label} description={`${group.label} の記事一覧`} hasSidebar>
+  <Sidebar />
+
+  <div class="category-shell">
+    <div class="inner">
+      <h1 class="title">{group.label}</h1>
+      <p class="count">{group.posts.length} 件</p>
+
+      <div class="cards">
+        {group.posts.map((post) => <PostCard post={post} showCategory={false} />)}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .category-shell {
+    padding-block: 2.5rem 4rem;
+  }
+
+  @media (min-width: 1024px) {
+    .category-shell {
+      padding-left: var(--sidebar-width);
+    }
+  }
+
+  .inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-inline: 1.5rem;
+  }
+
+  .title {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .count {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--text-color-secondary);
+  }
+
+  .cards {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    margin-top: 2rem;
+  }
+</style>
