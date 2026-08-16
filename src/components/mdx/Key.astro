@@ -1,0 +1,31 @@
+---
+/**
+ * キーボードのキー 1 つ。
+ *
+ * ```mdx
+ * <Key>Ctrl</Key> を押しながらクリックする。
+ * ```
+ */
+interface Props {
+  /** スロットを使わない場合のテキスト */
+  value?: string;
+}
+
+const { value } = Astro.props;
+---
+
+<kbd class="key"><slot>{value}</slot></kbd>
+
+<style>
+  .key {
+    display: inline-block;
+    border: 1px solid var(--surface-border);
+    border-radius: var(--border-radius);
+    padding: 0.175rem 0.35rem;
+    font-family: var(--font-family-mono);
+    font-size: 0.85rem;
+    line-height: 1.2;
+    color: var(--text-color);
+    background-color: var(--surface-200);
+  }
+</style>

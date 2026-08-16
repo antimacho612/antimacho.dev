@@ -1,0 +1,92 @@
+---
+/**
+ * 補足・注意の囲み。VitePress の `::: info` 相当。
+ *
+ * ```mdx
+ * <Callout type="warning" title="注意">
+ * Safari では挙動が異なる。
+ * </Callout>
+ * ```
+ */
+interface Props {
+  type?: 'note' | 'info' | 'tip' | 'warning' | 'danger';
+  /** 見出し。省略すると type に応じた既定の文言になる */
+  title?: string;
+}
+
+const { type = 'note', title } = Astro.props;
+
+const DEFAULT_TITLES: Record<NonNullable<Props['type']>, string> = {
+  note: 'NOTE',
+  info: 'INFO',
+  tip: 'TIP',
+  warning: 'WARNING',
+  danger: 'DANGER',
+};
+---
+
+<div class:list={['callout', type]}>
+  <p class="callout-title">{title ?? DEFAULT_TITLES[type]}</p>
+  <slot />
+</div>
+
+<style>
+  .callout {
+    --accent: var(--severity-default);
+    --bg: var(--severity-default-soft);
+
+    margin-block: 1rem;
+    border-radius: 12px;
+    padding: 1rem;
+    line-height: 1.7;
+    font-size: 0.875rem;
+    color: var(--text-color);
+    background-color: var(--bg);
+  }
+
+  .callout.info {
+    --accent: var(--severity-info);
+    --bg: var(--severity-info-soft);
+  }
+
+  .callout.tip {
+    --accent: var(--severity-tip);
+    --bg: var(--severity-tip-soft);
+  }
+
+  .callout.warning {
+    --accent: var(--severity-warning);
+    --bg: var(--severity-warning-soft);
+  }
+
+  .callout.danger {
+    --accent: var(--severity-danger);
+    --bg: var(--severity-danger-soft);
+  }
+
+  .callout-title {
+    margin-bottom: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+  }
+
+  /* スロットの中身は記事側のスコープなので :global で狙う。
+     .prose の段落マージンより詳細度が高いので上書きできる */
+  .callout :global(p) {
+    margin-block: 0.5rem;
+  }
+
+  .callout :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .callout :global(:is(ul, ol)) {
+    margin-block: 0.5rem;
+  }
+
+  .callout :global(pre) {
+    margin-block: 0.5rem;
+  }
+</style>

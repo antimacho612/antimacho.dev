@@ -42,7 +42,7 @@
     "lint-staged": "^15.2.0",
     "markdown-it": "^14.0.0",
     "markdownlint-cli2": "^0.19.1",
-    "mermaid": "^11.12.2",
+    "mermaid": "11.16.1",
     "prettier": "^3.2.4",
     "sass": "^1.70.0",
     "textlint": "^15.4.1",

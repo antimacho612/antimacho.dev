@@ -1,0 +1,123 @@
+---
+/**
+ * 外部リンクをカード形式で貼る。
+ *
+ * ```mdx
+ * <LinkCard
+ *   url="https://developer.mozilla.org/ja/docs/Web/CSS/@container"
+ *   label="@container - CSS | MDN"
+ *   description="コンテナクエリの仕様と使い方。"
+ * />
+ * ```
+ */
+interface Props {
+  url: string;
+  /** カードのタイトル */
+  label: string;
+  /** サムネイル画像の URL */
+  imageUrl?: string;
+  description?: string;
+}
+
+const { url, label, imageUrl, description } = Astro.props;
+
+let domain = url;
+try {
+  domain = new URL(url).hostname;
+} catch {
+  // URL として解釈できない場合は指定された文字列をそのまま出す
+}
+
+const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+---
+
+<a href={url} rel="noreferrer noopener" target="_blank" class="link-card" title={label}>
+  {imageUrl && <img src={imageUrl} alt="" class="thumbnail" loading="lazy" />}
+
+  <div class="main">
+    <p class="card-title">{label}</p>
+    {description && <p class="description">{description}</p>}
+    <div class="domain">
+      <img src={faviconUrl} alt="" class="favicon" loading="lazy" width="16" height="16" />
+      <span class="domain-name">{domain}</span>
+    </div>
+  </div>
+</a>
+
+<style>
+  .link-card {
+    --height: 6.5rem;
+
+    display: flex;
+    margin-block: 1rem;
+    height: var(--height);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--border-radius);
+    background-color: var(--surface-card);
+    overflow: hidden;
+    text-decoration: none;
+    transition: border-color var(--transition-duration);
+  }
+
+  .link-card:hover {
+    border-color: var(--primary-color);
+  }
+
+  .thumbnail {
+    flex-shrink: 0;
+    width: var(--height);
+    height: var(--height);
+    object-fit: cover;
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0.625rem 1rem;
+  }
+
+  .card-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .description {
+    flex: 1 1 auto;
+    margin-top: 0.25rem;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--text-color-secondary);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .domain {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-top: auto;
+  }
+
+  .favicon {
+    width: 1rem;
+    height: 1rem;
+    object-fit: contain;
+  }
+
+  .domain-name {
+    font-size: 0.75rem;
+    color: var(--text-color-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+</style>
