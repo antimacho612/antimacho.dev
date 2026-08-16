@@ -1,0 +1,235 @@
+/*
+ * 記事本文のスタイル。Markdown / MDX が生成する素の HTML に対して当てる。
+ *
+ * ここの指定は素のタグ（p, ul, table…）を直接狙うため、記事ヘッダーのような
+ * 「本文ではない UI」を .prose の内側に入れないこと。幅と余白はレイアウト側の
+ * カラム要素が持ち、.prose はタイポグラフィだけを担当する。
+ *
+ * .prose の中で .bleed を付けた要素（デモ枠など）は、本文幅を超えて
+ * 左右にはみ出せる。ビューポートに収まる範囲で最大 --bleed-max まで広がる。
+ */
+
+.prose {
+  font-size: 1rem;
+}
+
+/*
+ * --rails は左右の固定レール（サイドバー・目次）の合計幅。レイアウト側が設定する。
+ * はみ出し量はビューポートの残り幅の半分までに抑えるので、レールに重ならない。
+ */
+.prose .bleed {
+  --bleed-max: 140px;
+
+  margin-inline: calc(-1 * clamp(0px, (100vw - var(--rails, 0px) - 4rem - 100%) / 2, var(--bleed-max)));
+}
+
+/* ------------------------------------------------------------------ *
+ * 見出し
+ * ------------------------------------------------------------------ */
+
+.prose :is(h1, h2, h3, h4, h5, h6) {
+  position: relative;
+  font-weight: 600;
+  scroll-margin-top: calc(var(--global-header-height) + 1rem);
+}
+
+.prose h2 {
+  margin: 3rem 0 1rem;
+  border-top: 1px solid var(--surface-border);
+  padding-top: 1.5rem;
+  letter-spacing: -0.02em;
+  line-height: 2rem;
+  font-size: 1.5rem;
+}
+
+.prose h2:first-child {
+  margin-top: 1.5rem;
+}
+
+.prose h3 {
+  margin: 2rem 0 0.5rem;
+  letter-spacing: -0.01em;
+  line-height: 1.75rem;
+  font-size: 1.25rem;
+}
+
+.prose :is(h4, h5, h6) {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1rem;
+}
+
+/* 見出しの左に出るアンカー（PostBody の script が挿入する） */
+.prose .header-anchor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: -0.87em;
+  font-weight: 500;
+  color: var(--primary-color);
+  user-select: none;
+  opacity: 0;
+  transition: opacity var(--transition-duration);
+}
+
+.prose h2 .header-anchor {
+  top: 1.5rem;
+}
+
+.prose :is(h1, h2, h3, h4, h5, h6):hover .header-anchor,
+.prose .header-anchor:focus-visible {
+  opacity: 1;
+}
+
+/* ------------------------------------------------------------------ *
+ * 段落・インライン要素
+ * ------------------------------------------------------------------ */
+
+.prose p {
+  margin: 1rem 0;
+  line-height: 1.85;
+}
+
+.prose a {
+  font-weight: 500;
+  color: var(--primary-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--transition-duration);
+}
+
+.prose a:hover {
+  color: var(--primary-color-2);
+}
+
+.prose blockquote {
+  margin: 1rem 0;
+  border-left: 2px solid var(--surface-border);
+  padding-left: 1rem;
+}
+
+.prose blockquote > p {
+  color: var(--text-color-secondary);
+}
+
+.prose hr {
+  margin: 2rem 0;
+  border: none;
+  border-top: 1px solid var(--surface-border);
+}
+
+.prose :is(img, video) {
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+}
+
+.prose kbd {
+  display: inline-block;
+  border: 1px solid var(--surface-border);
+  border-bottom-width: 2px;
+  border-radius: 0.25rem;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.8125em;
+  background-color: var(--surface-100);
+}
+
+/* ------------------------------------------------------------------ *
+ * リスト
+ * ------------------------------------------------------------------ */
+
+.prose :is(ul, ol) {
+  margin: 1rem 0;
+  padding-left: 1.25rem;
+}
+
+.prose ul {
+  list-style: disc;
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
+.prose li {
+  line-height: 1.85;
+}
+
+.prose li + li {
+  margin-top: 0.5rem;
+}
+
+.prose li > :is(ul, ol) {
+  margin: 0.5rem 0 0;
+}
+
+/* ------------------------------------------------------------------ *
+ * テーブル
+ * ------------------------------------------------------------------ */
+
+.prose table {
+  display: block;
+  margin: 1.25rem 0;
+  overflow-x: auto;
+  font-size: 0.875rem;
+}
+
+.prose tr {
+  background-color: var(--table-tr-bg);
+  border-top: 1px solid var(--surface-border);
+}
+
+.prose tr:nth-child(2n) {
+  background-color: var(--table-tr-even-bg);
+}
+
+.prose :is(th, td) {
+  border: 1px solid var(--surface-border);
+  padding: 0.5rem 1rem;
+}
+
+.prose th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-color-secondary);
+  background-color: var(--table-tr-even-bg);
+}
+
+/* ------------------------------------------------------------------ *
+ * コード
+ * ------------------------------------------------------------------ */
+
+/* インラインコード */
+.prose :not(pre) > code {
+  border-radius: 0.25rem;
+  padding: 0.2rem 0.4rem;
+  font-size: var(--code-font-size);
+  color: var(--inline-code-color);
+  background-color: var(--inline-code-bg);
+}
+
+.prose a > code {
+  color: inherit;
+}
+
+/* コードブロック（Shiki が .astro-code を付ける） */
+.prose pre.astro-code {
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  padding: 1.25rem 0;
+  overflow-x: auto;
+  line-height: var(--code-line-height);
+  font-size: 0.875rem;
+}
+
+.prose pre.astro-code code {
+  display: block;
+  width: fit-content;
+  min-width: 100%;
+  padding-inline: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .prose pre.astro-code {
+    border-radius: 0;
+    margin-inline: -1.5rem;
+  }
+}

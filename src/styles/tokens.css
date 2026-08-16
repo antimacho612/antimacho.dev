@@ -1,0 +1,194 @@
+/*
+ * デザイントークン
+ *
+ * 旧テーマは PrimeVue の lara-light/dark-purple の theme.css に依存していたが、
+ * ここでは同じ配色を自前の CSS カスタムプロパティとして定義し直している。
+ * 変数名は旧テーマから引き継いでいるため、旧 SCSS の移植時にそのまま使える。
+ *
+ * ダークモードは <html class="dark"> で切り替える（BaseLayout の no-flash スクリプト）。
+ */
+
+:root {
+  color-scheme: light;
+
+  /* ---------------------------------------------------------------- *
+   * 固定パレット（light/dark で変わらない）
+   * ---------------------------------------------------------------- */
+  --blue-300: #85b2f9;
+  --blue-400: #609af8;
+  --blue-500: #3b82f6;
+  --yellow-300: #f2d066;
+  --yellow-400: #eec137;
+  --yellow-500: #eab308;
+  --pink-300: #f38ec0;
+  --pink-500: #ec4899;
+  --orange-300: #fba86f;
+  --orange-500: #f97316;
+  --purple-300: #c996fa;
+  --purple-500: #a855f7;
+  --red-400: #ff6259;
+  --red-500: #ff3d32;
+  --green-400: #34d399;
+  --green-500: #10b981;
+
+  /* ---------------------------------------------------------------- *
+   * タイポグラフィ / モーション / 形状
+   * ---------------------------------------------------------------- */
+  --font-family: system-ui, -apple-system, 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', Meiryo, sans-serif;
+  --font-family-mono: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', monospace;
+  --transition-duration: 0.2s;
+  --border-radius: 6px;
+
+  /* ---------------------------------------------------------------- *
+   * サーフェス / テキスト（light）
+   * ---------------------------------------------------------------- */
+  --surface-0: #ffffff;
+  --surface-50: #f9fafb;
+  --surface-100: #f3f4f6;
+  --surface-200: #e5e7eb;
+  --surface-300: #d1d5db;
+  --surface-400: #9ca3af;
+  --surface-500: #6b7280;
+  --surface-600: #4b5563;
+  --surface-700: #374151;
+  --surface-800: #1f2937;
+  --surface-900: #111827;
+
+  --surface-ground: #f9fafb;
+  --surface-section: #ffffff;
+  --surface-card: #ffffff;
+  --surface-overlay: #ffffff;
+  --surface-border: #dfe7ef;
+  --surface-hover: #f6f9fc;
+
+  --text-color: #4b5563;
+  --text-color-secondary: #6b7280;
+  --heading-color: var(--text-color);
+
+  --primary-color: #8b5cf6;
+  --primary-color-2: #7c3aed;
+  --primary-color-3: #6d28d9;
+  --primary-color-text: #ffffff;
+
+  --focus-ring: 0 0 0 0.2rem #ddd6fe;
+  --maskbg: rgba(0, 0, 0, 0.4);
+  --highlight-bg: #f5f3ff;
+  --highlight-text-color: #6d28d9;
+
+  /* ---------------------------------------------------------------- *
+   * 影（light）
+   * ---------------------------------------------------------------- */
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-2: 0 3px 12px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.07);
+  --shadow-3: 0 12px 32px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-4: 0 14px 44px rgba(0, 0, 0, 0.12), 0 3px 9px rgba(0, 0, 0, 0.12);
+
+  /* ---------------------------------------------------------------- *
+   * セマンティックカラー（light）
+   * ---------------------------------------------------------------- */
+  --severity-default: var(--text-color);
+  --severity-default-soft: rgba(148, 163, 184, 0.14);
+  --severity-primary: var(--primary-color);
+  --severity-primary-soft: rgba(139, 92, 246, 0.14);
+  --severity-info: var(--blue-500);
+  --severity-info-soft: rgba(59, 130, 246, 0.14);
+  --severity-tip: var(--green-500);
+  --severity-tip-soft: rgba(16, 185, 129, 0.14);
+  --severity-warning: var(--yellow-500);
+  --severity-warning-soft: rgba(234, 179, 8, 0.14);
+  --severity-danger: var(--red-500);
+  --severity-danger-soft: rgba(255, 61, 50, 0.14);
+
+  /* ---------------------------------------------------------------- *
+   * コード（light）
+   * ---------------------------------------------------------------- */
+  --code-font-size: 0.875em;
+  --code-line-height: 1.7;
+  --inline-code-bg: rgba(148, 163, 184, 0.14);
+  --inline-code-color: var(--primary-color);
+  --code-block-bg: rgba(148, 163, 184, 0.14);
+  --code-block-lang-color: var(--text-color);
+
+  /* ---------------------------------------------------------------- *
+   * テーブル（light）
+   * ---------------------------------------------------------------- */
+  --table-tr-bg: var(--surface-ground);
+  --table-tr-even-bg: var(--surface-100);
+
+  /* ---------------------------------------------------------------- *
+   * レイアウト寸法
+   * ---------------------------------------------------------------- */
+  --global-header-height: 64px;
+  --global-header-sticky-bg-color: rgba(249, 250, 251, 0.45);
+  --sidebar-width: 280px;
+  --toc-width: 240px;
+  --content-max-width: 820px;
+  --title-gradient: linear-gradient(123deg, var(--primary-color), var(--pink-300) 35%, var(--orange-300));
+
+  /* ---------------------------------------------------------------- *
+   * z-index（下から順に重なる）
+   * ---------------------------------------------------------------- */
+  --z-index-floating-toc: 10;
+  --z-index-back-to-top: 20;
+  --z-index-backdrop: 30;
+  --z-index-global-header: 40;
+  --z-index-sidebar: 50;
+}
+
+html.dark {
+  color-scheme: dark;
+
+  --surface-0: #111827;
+  --surface-50: #1f2937;
+  --surface-100: #374151;
+  --surface-200: #4b5563;
+  --surface-300: #6b7280;
+  --surface-400: #9ca3af;
+  --surface-500: #d1d5db;
+  --surface-600: #e5e7eb;
+  --surface-700: #f3f4f6;
+  --surface-800: #f9fafb;
+  --surface-900: #ffffff;
+
+  --surface-ground: #111827;
+  --surface-section: #111827;
+  --surface-card: #1f2937;
+  --surface-overlay: #1f2937;
+  --surface-border: rgba(255, 255, 255, 0.1);
+  --surface-hover: rgba(255, 255, 255, 0.03);
+
+  --text-color: rgba(255, 255, 255, 0.87);
+  --text-color-secondary: rgba(255, 255, 255, 0.6);
+
+  --primary-color: #a78bfa;
+  --primary-color-2: #c4b5fd;
+  --primary-color-3: #ddd6fe;
+  --primary-color-text: #030712;
+
+  --focus-ring: 0 0 0 0.2rem rgba(167, 139, 250, 0.2);
+  --highlight-bg: rgba(167, 139, 250, 0.16);
+  --highlight-text-color: rgba(255, 255, 255, 0.87);
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-2: 0 3px 12px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(0, 0, 0, 0.24);
+  --shadow-3: 0 12px 32px rgba(0, 0, 0, 0.36), 0 2px 6px rgba(0, 0, 0, 0.28);
+  --shadow-4: 0 14px 44px rgba(0, 0, 0, 0.44), 0 3px 9px rgba(0, 0, 0, 0.32);
+
+  --severity-default-soft: rgba(113, 113, 122, 0.2);
+  --severity-primary-soft: rgba(167, 139, 250, 0.2);
+  --severity-info: var(--blue-400);
+  --severity-info-soft: rgba(96, 154, 248, 0.2);
+  --severity-tip: var(--green-400);
+  --severity-tip-soft: rgba(52, 211, 153, 0.2);
+  --severity-warning: var(--yellow-400);
+  --severity-warning-soft: rgba(238, 193, 55, 0.2);
+  --severity-danger: var(--red-400);
+  --severity-danger-soft: rgba(255, 98, 89, 0.2);
+
+  --inline-code-bg: rgba(113, 113, 122, 0.2);
+  --code-block-bg: rgba(113, 113, 122, 0.2);
+
+  --table-tr-even-bg: var(--surface-50);
+
+  --global-header-sticky-bg-color: rgba(17, 24, 39, 0.3);
+}

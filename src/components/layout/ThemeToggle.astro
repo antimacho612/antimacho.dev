@@ -1,0 +1,112 @@
+---
+import SunIcon from '../icons/SunIcon.astro';
+import MoonIcon from '../icons/MoonIcon.astro';
+---
+
+<button type="button" role="switch" aria-checked="false" class="theme-toggle" data-theme-toggle>
+  <span class="visually-hidden" data-theme-toggle-label>ダークモードに切り替え</span>
+  <span class="knob">
+    <span class="icon">
+      <MoonIcon class="moon-icon" />
+      <SunIcon class="sun-icon" />
+    </span>
+  </span>
+</button>
+
+<style>
+  .theme-toggle {
+    --height: 1.75rem;
+
+    position: relative;
+    display: block;
+    flex-shrink: 0;
+    width: 3.5rem;
+    height: var(--height);
+    border: 1px solid var(--surface-border);
+    border-radius: 9999px;
+    background-color: var(--surface-100);
+    transition: border-color var(--transition-duration);
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--primary-color);
+  }
+
+  .knob {
+    --size: calc(var(--height) - 4px);
+
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background-color: var(--surface-0);
+    box-shadow: var(--shadow-1);
+    transition: transform var(--transition-duration);
+  }
+
+  .icon {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .icon :global(svg) {
+    --size: calc(var(--height) - 10px);
+
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: var(--size);
+    height: var(--size);
+    fill: var(--text-color-secondary);
+  }
+
+  .moon-icon {
+    display: none;
+  }
+
+  :global(html.dark) .knob {
+    transform: translateX(var(--height));
+  }
+
+  :global(html.dark) .sun-icon {
+    display: none;
+  }
+
+  :global(html.dark) .moon-icon {
+    display: block;
+  }
+
+  :global(html.dark) .icon :global(svg) {
+    fill: var(--text-color);
+  }
+</style>
+
+<script>
+  const STORAGE_KEY = 'appearance';
+
+  function sync() {
+    const isDark = document.documentElement.classList.contains('dark');
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]')) {
+      button.setAttribute('aria-checked', String(isDark));
+      const label = button.querySelector('[data-theme-toggle-label]');
+      if (label) label.textContent = isDark ? 'ライトモードに切り替え' : 'ダークモードに切り替え';
+    }
+  }
+
+  document.addEventListener('click', (event) => {
+    const button = (event.target as HTMLElement | null)?.closest('[data-theme-toggle]');
+    if (!button) return;
+
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem(STORAGE_KEY, isDark ? 'dark' : 'light');
+    sync();
+  });
+
+  sync();
+</script>

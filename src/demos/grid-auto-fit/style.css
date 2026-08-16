@@ -1,0 +1,30 @@
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+  font-size: 13px;
+}
+
+.controls label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.grid {
+  display: grid;
+  gap: 8px;
+  /* JS で --min-width と --mode を差し替える */
+  grid-template-columns: repeat(var(--mode, auto-fit), minmax(var(--min-width, 140px), 1fr));
+}
+
+.cell {
+  display: grid;
+  place-items: center;
+  height: 56px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+  color: #fff;
+  font-weight: 600;
+}

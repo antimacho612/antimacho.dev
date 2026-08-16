@@ -1,0 +1,87 @@
+---
+title: コンテナクエリの基本
+summary: 親要素の幅に応じてレイアウトを切り替えるコンテナクエリの使い方をまとめる。
+createdAt: '2026-08-16'
+tags:
+  - CSS
+  - レスポンシブ
+updatedAt: '2026-08-16'
+---
+
+## メディアクエリとの違い
+
+メディアクエリはビューポートの幅を見るが、コンテナクエリは**親要素の幅**を見る。
+同じコンポーネントをサイドバーとメインカラムの両方に置くとき、置かれた場所の幅で
+レイアウトを決められる。
+
+## 使い方
+
+親要素に`container-type`を指定し、子要素で`@container`を使う。
+
+```css
+.card-container {
+  container-type: inline-size;
+}
+
+@container (min-width: 400px) {
+  .card {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+  }
+}
+```
+
+<Sandbox
+  title="枠を横に広げるとカードが横並びになる（resizeハンドルで幅を変えられる）"
+  bleed
+  html={`<div class="wrapper">
+  <div class="card">
+    <div class="thumb"></div>
+    <div class="body">
+      <p class="card-title">コンテナクエリ</p>
+      <p class="card-text">親の幅が 400px を超えると横並びに切り替わる。</p>
+    </div>
+  </div>
+</div>`}
+  css={`.wrapper {
+  container-type: inline-size;
+  resize: horizontal;
+  overflow: auto;
+  width: 280px;
+  min-width: 200px;
+  max-width: 100%;
+  border: 1px dashed #a78bfa;
+  padding: 12px;
+}
+
+.card { display: grid; gap: 12px; }
+.thumb { height: 80px; border-radius: 8px; background: linear-gradient(135deg, #8b5cf6, #f38ec0); }
+.card-title { margin: 0 0 4px; font-weight: 600; }
+.card-text { margin: 0; font-size: 14px; opacity: .7; }
+
+@container (min-width: 400px) {
+  .card { grid-template-columns: 120px 1fr; align-items: center; }
+  .thumb { height: 100%; min-height: 80px; }
+}`}
+/>
+
+`container-type: inline-size`はインライン方向（横書きなら幅）のみを
+コンテナのサイズとして扱う。ブロック方向も見たい場合は`size`を指定するが、
+高さが確定していないと機能しないため、通常は`inline-size`で足りる。
+
+## 名前付きコンテナ
+
+コンテナが入れ子になる場合は`container-name`で対象を指定できる。
+
+```css
+.layout {
+  container-type: inline-size;
+  container-name: layout;
+}
+
+@container layout (min-width: 800px) {
+  .card {
+    /* .layout の幅が 800px 以上のときだけ適用される */
+  }
+}
+```

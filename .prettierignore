@@ -1,7 +1,12 @@
+# Markdown / MDX は prettier に触らせない
+# （MDX のコンポーネント呼び出しに書いたテンプレートリテラルが崩れるため）
 *.md
+*.mdx
+
 .husky
 .markdownlint-cli2.jsonc
 .textlintrc.json
+.astro
 .temp
 dist
 cache

@@ -1,7 +1,7 @@
 {
   "plugins": {
     "@textlint/markdown": {
-      "extensions": [".md"]
+      "extensions": [".md", ".mdx"]
     }
   },
   "filters": {},
@@ -16,7 +16,8 @@
       "ja-space-around-code": {
         "before": false,
         "after": false
-      }
+      },
+      "ja-no-space-around-parentheses": false
     }
   }
 }

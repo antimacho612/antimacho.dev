@@ -1,0 +1,194 @@
+---
+import { Code } from 'astro:components';
+import { SHIKI_THEMES } from '../../lib/shiki';
+
+/**
+ * 同じマークアップに別々の CSS を当てて並べ、違いを見比べる。
+ * CSS の解説で「これを付けるとこう変わる」を示すときに使う。
+ *
+ * ```mdx
+ * <Compare
+ *   title="box-sizing の違い"
+ *   html={`<div class="box">200px + padding</div>`}
+ *   css={`.box { width: 200px; padding: 20px; border: 4px solid #8b5cf6; }`}
+ *   variants={[
+ *     { label: 'content-box（既定）', css: `.box { box-sizing: content-box; }` },
+ *     { label: 'border-box', css: `.box { box-sizing: border-box; }` },
+ *   ]}
+ * />
+ * ```
+ */
+interface Variant {
+  label: string;
+  /** 共通 CSS のあとに追記される */
+  css?: string;
+  /** 共通 HTML を差し替えたい場合のみ指定する */
+  html?: string;
+}
+
+interface Props {
+  variants: Variant[];
+  /** すべてのバリアントで共有するマークアップ */
+  html?: string;
+  /** すべてのバリアントで共有する CSS */
+  css?: string;
+  js?: string;
+  title?: string;
+  /** プレビューの高さ(px)。未指定なら中身の高さに追従する */
+  height?: number;
+  /** 各バリアント固有の CSS をコードとして並べて表示する */
+  showCode?: boolean;
+  /** 本文幅を超えて左右に広げる */
+  bleed?: boolean;
+}
+
+const { variants, html = '', css = '', js = '', title, height, showCode = true, bleed = false } = Astro.props;
+
+const resolved = variants.map((variant) => ({
+  label: variant.label,
+  html: variant.html ?? html,
+  css: [css, variant.css ?? ''].filter((part) => part.trim() !== '').join('\n'),
+  ownCss: variant.css ?? '',
+}));
+---
+
+<figure class:list={['compare', { bleed }]} data-compare data-height={height}>
+  <div class="toolbar">
+    <p class="label">比較</p>
+    <button type="button" class="action" data-action="run" title="両方を最初から実行し直す">再実行</button>
+  </div>
+
+  <div class="grid">
+    {
+      resolved.map((variant) => (
+        <div class="variant" data-variant>
+          <template data-source="html" set:text={variant.html} />
+          <template data-source="css" set:text={variant.css} />
+          <template data-source="js" set:text={js} />
+
+          <p class="variant-label">{variant.label}</p>
+          <iframe
+            class="frame"
+            data-frame
+            title={variant.label}
+            sandbox="allow-scripts allow-forms"
+            style={height ? `height: ${height}px` : undefined}
+          />
+          {showCode && variant.ownCss.trim() !== '' && (
+            <div class="code">
+              <Code code={variant.ownCss} lang="css" themes={SHIKI_THEMES} defaultColor="light" />
+            </div>
+          )}
+        </div>
+      ))
+    }
+  </div>
+
+  {title && <figcaption class="caption">{title}</figcaption>}
+</figure>
+
+<style>
+  .compare {
+    /* margin-inline は prose.css の .bleed が設定する。ここで上書きしない */
+    margin-block: 1.5rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 0.75rem;
+    background-color: var(--surface-card);
+    overflow: hidden;
+  }
+
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.375rem 0.75rem;
+    border-bottom: 1px solid var(--surface-border);
+    background-color: var(--surface-50);
+  }
+
+  .label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--text-color-secondary);
+    text-transform: uppercase;
+  }
+
+  .action {
+    border-radius: var(--border-radius);
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+    color: var(--text-color-secondary);
+    transition:
+      color var(--transition-duration),
+      background-color var(--transition-duration);
+  }
+
+  .action:hover {
+    color: var(--text-color);
+    background-color: var(--surface-hover);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .variant + .variant {
+    border-left: 1px solid var(--surface-border);
+  }
+
+  @media (max-width: 559px) {
+    .variant + .variant {
+      border-left: 0;
+      border-top: 1px solid var(--surface-border);
+    }
+  }
+
+  .variant-label {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-color-secondary);
+    border-bottom: 1px solid var(--surface-border);
+  }
+
+  .frame {
+    width: 100%;
+    height: 160px;
+    border: 0;
+    background-color: var(--surface-0);
+  }
+
+  .code :global(pre) {
+    margin: 0;
+    border-top: 1px solid var(--surface-border);
+    border-radius: 0;
+    padding: 0.75rem 0;
+    max-height: 16rem;
+    overflow: auto;
+    font-size: 0.75rem;
+    line-height: 1.7;
+  }
+
+  .code :global(pre code) {
+    display: block;
+    width: fit-content;
+    min-width: 100%;
+    padding-inline: 0.75rem;
+  }
+
+  .caption {
+    padding: 0.5rem 0.875rem;
+    border-top: 1px solid var(--surface-border);
+    font-size: 0.8125rem;
+    color: var(--text-color-secondary);
+    background-color: var(--surface-50);
+  }
+</style>
+
+<script>
+  import { setupCompares } from '../../lib/sandbox';
+
+  setupCompares();
+</script>

@@ -1,0 +1,82 @@
+---
+import type { Post } from '../../lib/posts';
+import { categoryUrl, formatDate } from '../../lib/posts';
+import { getCategoryConfig } from '../../site.config';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const category = getCategoryConfig(post.category);
+// 時刻まで比べると、作成と同じ日の更新でも「更新」が出てしまう
+const isUpdated = formatDate(post.updatedAt) !== formatDate(post.createdAt);
+---
+
+<header class="post-header">
+  <a class="category" href={categoryUrl(post.categorySlug)}>{category.label}</a>
+  <h1 class="title">{post.title}</h1>
+
+  <div class="meta">
+    <time datetime={post.createdAt.toISOString()}>作成 {formatDate(post.createdAt)}</time>
+    {isUpdated && <time datetime={post.updatedAt.toISOString()}>更新 {formatDate(post.updatedAt)}</time>}
+  </div>
+
+  {
+    post.tags.length > 0 && (
+      <ul class="tags">
+        {post.tags.map((tag) => (
+          <li class="tag">{tag}</li>
+        ))}
+      </ul>
+    )
+  }
+</header>
+
+<style>
+  .post-header {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--surface-border);
+  }
+
+  .category {
+    display: inline-block;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--primary-color);
+    text-transform: uppercase;
+  }
+
+  .title {
+    margin-top: 0.5rem;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.75rem;
+    font-size: 0.8125rem;
+    color: var(--text-color-secondary);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .tag {
+    border-radius: 9999px;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.75rem;
+    color: var(--text-color-secondary);
+    background-color: var(--severity-default-soft);
+  }
+</style>

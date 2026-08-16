@@ -1,0 +1,77 @@
+---
+import type { Post } from '../../lib/posts';
+import { formatDate } from '../../lib/posts';
+import { getCategoryConfig } from '../../site.config';
+
+interface Props {
+  post: Post;
+  /** カテゴリ一覧など、カテゴリが自明な場所では非表示にする */
+  showCategory?: boolean;
+}
+
+const { post, showCategory = true } = Astro.props;
+const category = getCategoryConfig(post.category);
+---
+
+<a class="card" href={post.url} data-category={post.categorySlug}>
+  <div class="card-meta">
+    {showCategory && <span class="card-category">{category.label}</span>}
+    <time datetime={post.createdAt.toISOString()}>{formatDate(post.createdAt)}</time>
+  </div>
+  <h3 class="card-title">{post.title}</h3>
+  {post.summary && <p class="card-summary">{post.summary}</p>}
+</a>
+
+<style>
+  .card {
+    display: block;
+    height: 100%;
+    border: 1px solid var(--surface-border);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    background-color: var(--surface-card);
+    transition:
+      border-color var(--transition-duration),
+      box-shadow var(--transition-duration),
+      transform var(--transition-duration);
+  }
+
+  .card:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-2);
+    transform: translateY(-2px);
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    color: var(--text-color-secondary);
+  }
+
+  .card-category {
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--primary-color);
+    text-transform: uppercase;
+  }
+
+  .card-title {
+    margin-top: 0.5rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .card-summary {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--text-color-secondary);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+</style>

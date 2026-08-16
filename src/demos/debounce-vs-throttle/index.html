@@ -1,0 +1,25 @@
+<div class="controls">
+  <label class="control">
+    待ち時間
+    <input type="range" id="wait" min="100" max="1000" step="50" value="400" />
+    <output id="wait-value">400ms</output>
+  </label>
+  <button type="button" id="clear">クリア</button>
+</div>
+
+<input type="text" id="source" class="source" placeholder="ここに連続で入力してみる" />
+
+<div class="lanes">
+  <div class="lane" data-lane="raw">
+    <p class="lane-label">そのまま <span class="count" data-count="raw">0</span></p>
+    <div class="track" data-track="raw"></div>
+  </div>
+  <div class="lane" data-lane="debounce">
+    <p class="lane-label">debounce <span class="count" data-count="debounce">0</span></p>
+    <div class="track" data-track="debounce"></div>
+  </div>
+  <div class="lane" data-lane="throttle">
+    <p class="lane-label">throttle <span class="count" data-count="throttle">0</span></p>
+    <div class="track" data-track="throttle"></div>
+  </div>
+</div>

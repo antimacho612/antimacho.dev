@@ -1,0 +1,183 @@
+/*
+ * リセットと素の HTML 要素のベーススタイル。
+ * 記事本文（.prose）の見た目は prose.css 側で定義する。
+ */
+
+@layer reset {
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    line-height: 1.4;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--global-header-height) + 1rem);
+  }
+
+  body {
+    margin: 0;
+    width: 100%;
+    min-width: 320px;
+    min-height: 100vh;
+    font-synthesis: style;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin: 0;
+    overflow-wrap: break-word;
+  }
+
+  strong,
+  b {
+    font-weight: 600;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
+  blockquote,
+  figure {
+    margin: 0;
+  }
+
+  pre,
+  code,
+  kbd,
+  samp {
+    font-family: var(--font-family-mono);
+  }
+
+  ol,
+  ul,
+  menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  summary {
+    margin: 0;
+    padding: 0;
+  }
+
+  img,
+  svg,
+  video,
+  canvas,
+  audio,
+  iframe,
+  embed,
+  object {
+    display: block;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    border: 0;
+    padding: 0;
+    font: inherit;
+    line-height: inherit;
+    color: inherit;
+  }
+
+  button {
+    background-color: transparent;
+    background-image: none;
+    cursor: pointer;
+  }
+
+  input,
+  textarea {
+    background-color: transparent;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  fieldset {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background-color: var(--surface-ground);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--heading-color);
+}
+
+:focus-visible {
+  outline: 0 none;
+  box-shadow: var(--focus-ring);
+}
+
+/*
+ * Shiki のデュアルテーマ切り替え。
+ * light テーマの値はインラインスタイルで、dark テーマの値は --shiki-dark* の
+ * カスタムプロパティとして出力されるため、dark のときだけ後者を採用する。
+ */
+html.dark .astro-code,
+html.dark .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+/* スクリーンリーダー専用テキスト */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

@@ -1,20 +1,14 @@
 {
+  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "lib": ["ESNext", "DOM", "DOM.iterable"],
-    "moduleResolution": "Node",
-    "esModuleInterop": true,
-    "strict": true,
-    "noUnusedLocals": true,
-    "declaration": true,
-    "resolveJsonModule": true,
-    "jsx": "preserve",
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "rootDir": "./",
-    "baseUrl": "./",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [ "src/*" ]
+    }
   },
-  "include": [".vitepress/**/*.ts", ".vitepress/**/*.mts", ".vitepress/**/*.d.ts", ".vitepress/**/*.vue"],
-  "exclude": ["dist", "node_modules"],
+  "include": [ ".astro/types.d.ts", "src/**/*", "astro.config.mjs" ],
+  "exclude": [ "dist", "node_modules" ]
 }

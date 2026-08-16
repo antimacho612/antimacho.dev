@@ -1,0 +1,9 @@
+.box {
+  display: grid;
+  place-items: center;
+  height: 80px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #8b5cf6, #f38ec0);
+  color: #fff;
+  font-weight: 600;
+}

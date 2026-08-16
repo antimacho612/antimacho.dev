@@ -1,0 +1,60 @@
+---
+/**
+ * 見出しや文中に添える小さなラベル。
+ *
+ * ```mdx
+ * ## 新機能 <Badge type="tip">v2</Badge>
+ * ```
+ */
+interface Props {
+  type?: 'default' | 'info' | 'tip' | 'warning' | 'danger';
+  /** スロットを使わない場合のテキスト */
+  text?: string;
+}
+
+const { type = 'default', text } = Astro.props;
+---
+
+<span class:list={['badge', type]}>
+  <slot>{text}</slot>
+</span>
+
+<style>
+  .badge {
+    display: inline-block;
+    margin-left: 0.125rem;
+    padding: 0 0.625rem;
+    line-height: 1.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--severity-default);
+    background-color: var(--severity-default-soft);
+    border: 1px solid var(--severity-default);
+    border-radius: 9999px;
+    transform: translateY(-0.125rem);
+  }
+
+  .badge.info {
+    color: var(--severity-info);
+    background-color: var(--severity-info-soft);
+    border-color: var(--severity-info);
+  }
+
+  .badge.tip {
+    color: var(--severity-tip);
+    background-color: var(--severity-tip-soft);
+    border-color: var(--severity-tip);
+  }
+
+  .badge.warning {
+    color: var(--severity-warning);
+    background-color: var(--severity-warning-soft);
+    border-color: var(--severity-warning);
+  }
+
+  .badge.danger {
+    color: var(--severity-danger);
+    background-color: var(--severity-danger-soft);
+    border-color: var(--severity-danger);
+  }
+</style>
