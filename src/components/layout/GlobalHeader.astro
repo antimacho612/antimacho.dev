@@ -1,8 +1,7 @@
 ---
+import { Icon } from 'astro-icon/components';
 import { SITE } from '../../site.config';
 import { withBase } from '../../lib/url';
-import Bars3Icon from '../icons/Bars3Icon.astro';
-import GitHubIcon from '../icons/GitHubIcon.astro';
 import ThemeToggle from './ThemeToggle.astro';
 
 interface Props {
@@ -21,7 +20,7 @@ const { isHome = false, hasSidebar = false } = Astro.props;
       {
         hasSidebar && (
           <button type="button" class="menu-button" data-sidebar-toggle>
-            <Bars3Icon class="menu-icon" />
+            <Icon name="heroicons:bars-3" class="menu-icon" />
             <span class="visually-hidden">メニューを開く</span>
           </button>
         )
@@ -33,7 +32,7 @@ const { isHome = false, hasSidebar = false } = Astro.props;
       <ThemeToggle />
       <div class="separator"></div>
       <a href={SITE.githubUrl} title="GitHub" target="_blank" rel="noopener" class="github-link">
-        <GitHubIcon class="github-icon" />
+        <Icon name="simple-icons:github" class="github-icon" />
       </a>
     </div>
   </div>

@@ -8,8 +8,8 @@ export interface CategoryConfig {
    * 未指定は 0 として扱い、同値ならカテゴリ名の昇順。
    */
   priority?: number;
-  /** public/ からの絶対パス。省略時は頭文字のバッジで代替する */
-  iconSrc?: string;
+  /** Iconify のアイコン名（例: 'logos:javascript'）。省略時は頭文字のバッジで代替する */
+  icon?: string;
 }
 
 export const SITE = {
@@ -29,18 +29,18 @@ export const SITE = {
 export const CATEGORIES: Record<string, CategoryConfig> = {
   CSS: { priority: 30 },
   HTML: { priority: 20 },
-  JavaScript: { priority: 10, iconSrc: '/icons/javascript.svg' },
+  JavaScript: { priority: 10, icon: 'logos:javascript' },
   TypeScript: {},
-  General: { label: '一般', priority: -10, iconSrc: '/icons/general.svg' },
+  General: { label: '一般', priority: -10, icon: 'heroicons:computer-desktop' },
 };
 
 export function getCategoryConfig(
   category: string
-): Required<Pick<CategoryConfig, 'label' | 'priority'>> & Pick<CategoryConfig, 'iconSrc'> {
+): Required<Pick<CategoryConfig, 'label' | 'priority'>> & Pick<CategoryConfig, 'icon'> {
   const config = CATEGORIES[category] ?? {};
   return {
     label: config.label ?? category,
     priority: config.priority ?? 0,
-    iconSrc: config.iconSrc,
+    icon: config.icon,
   };
 }
