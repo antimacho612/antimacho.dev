@@ -1,0 +1,110 @@
+---
+import { SITE } from '../../site.config';
+import { withBase } from '../../lib/url';
+import GitHubIcon from '../icons/GitHubIcon.astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  /** ホームではスクロールしてもすりガラス化しない */
+  isHome?: boolean;
+}
+
+const { isHome = false } = Astro.props;
+---
+
+<header class:list={['global-header', { 'is-home': isHome }]} data-global-header>
+  <div class="body">
+    <a class="title" href={withBase('/')}>{SITE.title}</a>
+
+    <div class="actions">
+      <ThemeToggle />
+      <div class="separator"></div>
+      <a href={SITE.githubUrl} title="GitHub" target="_blank" rel="noopener" class="github-link">
+        <GitHubIcon class="github-icon" />
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .global-header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: var(--global-header-height);
+    padding: 0 1.5rem;
+    background-color: var(--surface-ground);
+    border-bottom: 1px solid transparent;
+    z-index: var(--z-index-global-header);
+    white-space: nowrap;
+    transition:
+      background-color 0.4s,
+      border-color 0.4s;
+  }
+
+  .global-header.is-sticky:not(.is-home) {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    background-color: var(--global-header-sticky-bg-color);
+    border-color: var(--surface-border);
+  }
+
+  .body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .title {
+    flex-shrink: 0;
+    font-size: 1.375rem;
+    font-weight: 600;
+    background: var(--title-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+  }
+
+  .separator {
+    margin: 0 1rem;
+    width: 1px;
+    height: 24px;
+    background-color: var(--surface-border);
+  }
+
+  .github-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    color: var(--text-color-secondary);
+    transition: color var(--transition-duration);
+  }
+
+  .github-link:hover {
+    color: var(--text-color);
+  }
+
+  .github-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: currentColor;
+  }
+</style>
+
+<script>
+  const header = document.querySelector('[data-global-header]');
+
+  if (header) {
+    const update = () => header.classList.toggle('is-sticky', window.scrollY > 50);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+  }
+</script>

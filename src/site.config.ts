@@ -1,0 +1,45 @@
+/** サイト全体の設定。旧 .vitepress/config.mts の themeConfig 相当。 */
+
+export interface CategoryConfig {
+  /** 一覧などに表示する名前。省略時はディレクトリ名をそのまま使う */
+  label?: string;
+  /**
+   * 並び順の優先度。数字が大きいほど前に来る。
+   * 未指定は 0 として扱い、同値ならカテゴリ名の昇順。
+   */
+  priority?: number;
+  /** public/ からの絶対パス。省略時は頭文字のバッジで代替する */
+  iconSrc?: string;
+}
+
+export const SITE = {
+  title: 'antimacho.dev',
+  description: 'antimacho の技術メモ',
+  lang: 'ja',
+  githubUrl: 'https://github.com/antimacho612/antimacho.dev/',
+  /** 記事の「GitHub で編集する」リンク。:path は content/posts からの相対パスに置換される */
+  editLinkPattern: 'https://github.com/antimacho612/antimacho.dev/blob/main/src/content/posts/:path',
+  editLinkText: 'このページを GitHub で編集する',
+} as const;
+
+/**
+ * カテゴリ設定。記事は src/content/posts/<カテゴリ名>/*.mdx に置き、
+ * ディレクトリ名がそのままカテゴリ ID になる。ここに無いカテゴリも既定値で表示される。
+ */
+export const CATEGORIES: Record<string, CategoryConfig> = {
+  CSS: { priority: 30 },
+  HTML: { priority: 20 },
+  JavaScript: { priority: 10, iconSrc: '/icons/javascript.svg' },
+  TypeScript: {},
+  General: { label: '一般', priority: -10, iconSrc: '/icons/general.svg' },
+};
+
+export function getCategoryConfig(category: string): Required<Pick<CategoryConfig, 'label' | 'priority'>> &
+  Pick<CategoryConfig, 'iconSrc'> {
+  const config = CATEGORIES[category] ?? {};
+  return {
+    label: config.label ?? category,
+    priority: config.priority ?? 0,
+    iconSrc: config.iconSrc,
+  };
+}

@@ -1,15 +1,36 @@
 ---
-// ステップ 1 の疎通確認用プレースホルダー。ステップ 3 でホーム画面に置き換える。
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../site.config';
+
+// ステップ 3 で記事一覧・カテゴリタブを持つホーム画面に置き換える。
 ---
 
-<html lang="ja">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>antimacho.dev</title>
-  </head>
-  <body>
-    <h1>antimacho.dev</h1>
-    <p>Astro 移行の足場を構築中。</p>
-  </body>
-</html>
+<BaseLayout isHome>
+  <div class="hero">
+    <h1 class="hero-title">{SITE.title}</h1>
+    <p class="hero-description">{SITE.description}</p>
+  </div>
+</BaseLayout>
+
+<style>
+  .hero {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: var(--title-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: fit-content;
+  }
+
+  .hero-description {
+    margin-top: 0.75rem;
+    color: var(--text-color-secondary);
+  }
+</style>

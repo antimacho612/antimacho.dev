@@ -1,0 +1,68 @@
+---
+import { SITE } from '../site.config';
+import GlobalHeader from '../components/layout/GlobalHeader.astro';
+import BackToTop from '../components/layout/BackToTop.astro';
+import '../styles/tokens.css';
+import '../styles/base.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** ホームではヘッダーのすりガラス化を無効にする */
+  isHome?: boolean;
+}
+
+const { title, description = SITE.description, isHome = false } = Astro.props;
+
+const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const favicon =
+  'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="85">🚀</text></svg>';
+---
+
+<html lang={SITE.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={favicon} />
+    <title>{pageTitle}</title>
+
+    {/* 初回描画前にテーマを確定させ、ライト→ダークのちらつきを防ぐ */}
+    <script is:inline>
+      (() => {
+        const stored = localStorage.getItem('appearance');
+        const isDark =
+          stored === 'dark' ||
+          (stored !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.classList.toggle('dark', isDark);
+      })();
+    </script>
+  </head>
+
+  <body>
+    <div class="layout">
+      <GlobalHeader isHome={isHome} />
+      <main class="content">
+        <slot />
+      </main>
+    </div>
+    <BackToTop />
+  </body>
+</html>
+
+<style>
+  .layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .content {
+    flex-grow: 1;
+    width: 100%;
+    padding-top: var(--global-header-height);
+  }
+</style>
