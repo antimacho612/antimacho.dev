@@ -3,15 +3,15 @@
 ## 置き場所と URL
 
 ```txt
-src/content/posts/<カテゴリ>/<スラッグ>.mdx  →  /posts/<かてごり>/<すらっぐ>
+src/content/posts/<category>/<slug>.mdx  →  /posts/<category>/<slug>
 ```
 
-ディレクトリ名がそのままカテゴリになる。**index への登録は不要**で、ファイルを 1 つ置けば
-ホーム・サイドバー・カテゴリページのすべてに載る。
+ディレクトリ名がそのままカテゴリになる。
+**index への登録は不要**で、ファイルを 1 つ置けばホーム・サイドバー・カテゴリページのすべてに載る。
 
-URL は小文字化される（`CSS/foo.mdx` → `/posts/css/foo`）が、表示上のカテゴリ名は
-ディレクトリ名のまま（`CSS`）。ラベルや並び順を変えたいときは
-[src/site.config.ts](../site.config.ts) の `CATEGORIES` に足す。設定がなくても表示はされる。
+URL は小文字化される（`CSS/foo.mdx` → `/posts/css/foo`）が、表示上のカテゴリ名はディレクトリ名のまま（`CSS`）。
+ラベルや並び順を変えたいときは [src/site.config.ts](../site.config.ts) の `CATEGORIES` に足す。
+設定がなくても表示はされる。
 
 新規作成は [_templates/post.mdx](_templates/post.mdx) をコピーするのが早い。
 
@@ -21,12 +21,12 @@ URL は小文字化される（`CSS/foo.mdx` → `/posts/css/foo`）が、表示
 
 ```yaml
 ---
-title: コンテナクエリの基本        # 必須
-summary: 一覧カードに出る 1〜2 行の説明   # 任意だが書くこと
-createdAt: '2026-08-16'            # 必須。コミット時に scripts/updateFrontmatter が補う
-updatedAt: '2026-08-20'            # 任意。2 回目以降のコミットで自動更新される
-tags: [CSS, レスポンシブ]           # 任意
-draft: false                       # true にすると本番ビルドから外れる
+title: コンテナクエリの基本              # 必須
+summary: 一覧カードに出る 1〜2 行の説明  # 任意だが書くこと
+createdAt: '2026-08-16'                  # 必須。コミット時に scripts/updateFrontmatter が補う
+updatedAt: '2026-08-20'                  # 任意。2 回目以降のコミットで自動更新される
+tags: [CSS, レスポンシブ]                # 任意
+draft: false                             # true にすると本番ビルドから外れる
 ---
 ```
 
@@ -34,8 +34,8 @@ draft: false                       # true にすると本番ビルドから外�
 
 ## 使えるコンポーネント
 
-記事の中では **import せずに**そのまま使える。一覧と props は
-[記事「記事で使えるコンポーネント」](posts/General/mdx-components.mdx) に実物付きでまとめてある。
+記事の中では **import せずに**そのまま使える。
+一覧と props は [記事「記事で使えるコンポーネント」](posts/General/mdx-components.mdx) に実物付きでまとめてある。
 
 | | 用途 |
 | --- | --- |
@@ -47,8 +47,7 @@ draft: false                       # true にすると本番ビルドから外�
 | `<LinkCard>` | 外部リンクをカードで貼る |
 | `<Mermaid>` | 図 |
 
-追加したいものは [src/components/mdx/](../components/mdx/) に置いて
-[index.ts](../components/mdx/index.ts) に export する。
+追加したいものは [src/components/mdx/](../components/mdx/) に置いて [index.ts](../components/mdx/index.ts) に export する。
 
 ## デモの使い分け
 
@@ -79,8 +78,7 @@ npm run check   # 型と frontmatter
 npm run build   # ビルドが通るか
 ```
 
-textlint / markdownlint は `npm run lint:text` / `npm run lint:markdown` で個別に走る
-（コミット時に lint-staged からも自動で走る）。
+textlint / markdownlint は `npm run lint:text` / `npm run lint:markdown` で個別に走る（コミット時に lint-staged からも自動で走る）。
 
 > [!CAUTION]
 > `textlint --fix` は **JSX の中身まで書き換えることがある**。textlint の markdown
