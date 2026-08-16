@@ -1,9 +1,9 @@
 ---
+import { Icon } from 'astro-icon/components';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/post/PostCard.astro';
 import { SITE } from '../site.config';
 import { getPosts, groupByCategory } from '../lib/posts';
-import { withBase } from '../lib/url';
 
 const posts = await getPosts();
 const groups = groupByCategory(posts);
@@ -24,7 +24,7 @@ const groups = groupByCategory(posts);
       {
         groups.map((group) => (
           <button type="button" class="tab" role="tab" aria-selected="false" data-tab={group.categorySlug}>
-            {group.iconSrc && <img class="tab-icon" src={withBase(group.iconSrc)} alt="" width="16" height="16" />}
+            {group.icon && <Icon name={group.icon} class="tab-icon" />}
             {group.label}
             <span class="count">{group.posts.length}</span>
           </button>
@@ -99,7 +99,6 @@ const groups = groupByCategory(posts);
   .tab-icon {
     width: 1rem;
     height: 1rem;
-    object-fit: contain;
   }
 
   .count {

@@ -1,14 +1,13 @@
 ---
-import SunIcon from '../icons/SunIcon.astro';
-import MoonIcon from '../icons/MoonIcon.astro';
+import { Icon } from 'astro-icon/components';
 ---
 
 <button type="button" role="switch" aria-checked="false" class="theme-toggle" data-theme-toggle>
   <span class="visually-hidden" data-theme-toggle-label>ダークモードに切り替え</span>
   <span class="knob">
     <span class="icon">
-      <MoonIcon class="moon-icon" />
-      <SunIcon class="sun-icon" />
+      <Icon name="heroicons:moon-solid" class="moon-icon" />
+      <Icon name="heroicons:sun-solid" class="sun-icon" />
     </span>
   </span>
 </button>

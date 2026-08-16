@@ -25,7 +25,7 @@ export interface CategoryGroup {
   category: string;
   categorySlug: string;
   label: string;
-  iconSrc?: string;
+  icon?: string;
   url: string;
   posts: Post[];
 }
@@ -86,13 +86,13 @@ export function groupByCategory(posts: Post[]): CategoryGroup[] {
 
   return [...groups.entries()]
     .map(([category, categoryPosts]) => {
-      const { label, priority, iconSrc } = getCategoryConfig(category);
+      const { label, priority, icon } = getCategoryConfig(category);
       const categorySlug = categoryPosts[0]!.categorySlug;
       return {
         category,
         categorySlug,
         label,
-        iconSrc,
+        icon,
         url: categoryUrl(categorySlug),
         priority,
         posts: categoryPosts,
