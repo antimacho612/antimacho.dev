@@ -1,0 +1,62 @@
+---
+title: 記事のタイトル
+summary: 一覧カードに出る 1〜2 行の説明。何が分かる記事なのかを書く。
+createdAt: 2026-01-01
+tags: []
+draft: true
+---
+
+導入。何の話で、なぜ気にする必要があるのかを 2〜3 行で書く。
+前置きが長くなるなら削る。
+
+## まず動かして確かめる
+
+説明より先にデモを置く。短いものは Sandbox に直接書く。
+
+<Sandbox
+  title="何が起きているかの一言"
+  html={`<div class="box">hello</div>`}
+  css={`.box {
+  display: grid;
+  place-items: center;
+  height: 80px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #8b5cf6, #f38ec0);
+  color: #fff;
+  font-weight: 600;
+}`}
+/>
+
+大きいデモは src/demos/<id>/ に置いて id で参照する。
+
+{/* <Demo id="..." /> */}
+
+## 仕組み
+
+コードと合わせて説明する。コードブロックには言語を指定する。
+
+```css
+.box {
+  container-type: inline-size;
+}
+```
+
+<Callout type="warning">
+ブラウザ差や落とし穴があればここに書く。無ければ丸ごと消す。
+</Callout>
+
+## 使い分け
+
+どういうときにどちらを選ぶか。表にできるなら表にする。
+
+| 状況 | 選ぶもの | 理由 |
+| --- | --- | --- |
+|  |  |  |
+
+## 参考
+
+<LinkCard
+  url="https://developer.mozilla.org/ja/"
+  label="MDN Web Docs"
+  description="一次情報へのリンクを貼る。"
+/>
