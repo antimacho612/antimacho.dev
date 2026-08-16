@@ -1,14 +1,15 @@
 /*
  * 記事本文のスタイル。Markdown / MDX が生成する素の HTML に対して当てる。
  *
- * .prose の直下に .bleed を付けた要素（デモ枠など）は、本文幅を超えて
+ * ここの指定は素のタグ（p, ul, table…）を直接狙うため、記事ヘッダーのような
+ * 「本文ではない UI」を .prose の内側に入れないこと。幅と余白はレイアウト側の
+ * カラム要素が持ち、.prose はタイポグラフィだけを担当する。
+ *
+ * .prose の中で .bleed を付けた要素（デモ枠など）は、本文幅を超えて
  * 左右にはみ出せる。ビューポートに収まる範囲で最大 --bleed-max まで広がる。
  */
 
 .prose {
-  max-width: var(--content-max-width);
-  margin-inline: auto;
-  padding-inline: 1.5rem;
   font-size: 1rem;
 }
 
