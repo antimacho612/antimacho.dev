@@ -131,8 +131,8 @@
   --z-index-floating-toc: 10;
   --z-index-back-to-top: 20;
   --z-index-backdrop: 30;
-  --z-index-global-header: 40;
-  --z-index-sidebar: 50;
+  --z-index-sidebar: 40;
+  --z-index-global-header: 50;
 }
 
 html.dark {
