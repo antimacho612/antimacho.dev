@@ -10,7 +10,6 @@
     "preview": "astro preview",
     "check": "astro check",
     "lint:markdown": "markdownlint-cli2 \"src/content/posts/**/*.mdx\"",
-    "lint:text": "textlint \"src/content/posts/**/*.mdx\"",
     "format": "prettier . --write",
     "prepare": "husky"
   },
@@ -20,7 +19,6 @@
     ],
     "src/content/posts/**/*.mdx": [
       "node scripts/updateFrontmatter",
-      "textlint",
       "markdownlint-cli2"
     ]
   },
@@ -50,12 +48,6 @@
     "markdownlint-cli2": "^0.23.0",
     "prettier": "^3.2.4",
     "prettier-plugin-astro": "0.14.1",
-    "textlint": "^15.8.0",
-    "textlint-rule-ja-no-redundant-expression": "^4.0.1",
-    "textlint-rule-ja-unnatural-alphabet": "^2.0.1",
-    "textlint-rule-no-doubled-joshi": "^5.1.0",
-    "textlint-rule-preset-ja-spacing": "^2.3.0",
-    "textlint-rule-prh": "^6.1.0",
     "typescript": "6.0.3"
   }
 }
