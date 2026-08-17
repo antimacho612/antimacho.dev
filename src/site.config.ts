@@ -27,9 +27,9 @@ export const SITE = {
  * ディレクトリ名がそのままカテゴリ ID になる。ここに無いカテゴリも既定値で表示される。
  */
 export const CATEGORIES: Record<string, CategoryConfig> = {
-  CSS: { priority: 30 },
-  HTML: { priority: 20 },
   JavaScript: { priority: 10, icon: 'logos:javascript' },
+  HTML: { priority: 20, icon: 'logos:html-5' },
+  CSS: { priority: 30, icon: 'logos:css' },
   TypeScript: {},
   General: { label: '一般', priority: -10, icon: 'heroicons:computer-desktop' },
 };
