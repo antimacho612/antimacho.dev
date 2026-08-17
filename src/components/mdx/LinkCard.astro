@@ -1,25 +1,25 @@
 ---
+import { fetchOgp } from '../../lib/ogp';
+
 /**
- * 外部リンクをカード形式で貼る。
+ * 外部リンクをカード形式で貼る。タイトル・説明・画像はビルド時に対象ページの
+ * OGP から自動取得する（label / description / imageUrl を指定すればその値で上書きできる）。
  *
  * ```mdx
- * <LinkCard
- *   url="https://developer.mozilla.org/ja/docs/Web/CSS/@container"
- *   label="@container - CSS | MDN"
- *   description="コンテナクエリの仕様と使い方。"
- * />
+ * <LinkCard url="https://developer.mozilla.org/ja/docs/Web/CSS/@container" />
  * ```
  */
 interface Props {
   url: string;
-  /** カードのタイトル */
-  label: string;
-  /** サムネイル画像の URL */
+  /** カードのタイトル。省略時は OGP から取得する */
+  label?: string;
+  /** サムネイル画像の URL。省略時は OGP から取得する */
   imageUrl?: string;
+  /** 省略時は OGP から取得する */
   description?: string;
 }
 
-const { url, label, imageUrl, description } = Astro.props;
+const { url, label: labelProp, imageUrl: imageUrlProp, description: descriptionProp } = Astro.props;
 
 let domain = url;
 try {
@@ -27,6 +27,12 @@ try {
 } catch {
   // URL として解釈できない場合は指定された文字列をそのまま出す
 }
+
+const ogp = await fetchOgp(url);
+
+const label = labelProp ?? ogp.title ?? domain;
+const imageUrl = imageUrlProp ?? ogp.imageUrl;
+const description = descriptionProp ?? ogp.description;
 
 const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
 ---
