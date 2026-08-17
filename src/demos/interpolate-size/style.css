@@ -1,0 +1,54 @@
+:root {
+  interpolate-size: allow-keywords;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: start;
+  gap: 1rem;
+}
+
+button {
+  width: 3.5rem;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0.5rem;
+  border-radius: 99px;
+  border: none;
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  background: linear-gradient(135deg, #8b5cf6, #f38ec0);
+  cursor: pointer;
+  transition: width 0.3s ease-in-out;
+
+  &:hover,
+  &:focus-visible {
+    width: auto;
+  }
+
+  @media (any-hover: hover) {
+    &:hover {
+      .button-icon {
+        background-color: #8b5cf6f0;
+      }
+    }
+  }
+}
+
+.button-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255 / 70%);
+  transition: background-color 0.3s;
+}
+
+.button-label {
+  padding: 0 1.5rem 0 1rem;
+  color: white;
+}

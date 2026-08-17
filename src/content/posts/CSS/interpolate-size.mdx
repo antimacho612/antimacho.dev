@@ -1,0 +1,41 @@
+---
+title: interpolate-size
+summary: auto や min-content などの固有キーワード値サイズと数値間のアニメーションを有効にできるプロパティ。
+createdAt: '2026-08-16'
+tags:
+  - CSS
+  - Size
+updatedAt: '2026-08-17'
+---
+
+CSS の `interpolate-size` プロパティと `calc-size()` 関数により、固有キーワード値のアニメーションが可能になった。
+
+## まず動かして確かめる
+
+ホバーした際に、文字の量に合わせて `width: auto` な幅にアニメーションする例。
+
+<Demo id="interpolate-size" />
+
+## プロパティについて
+
+`interpolate-size` プロパティは `auto` や `min-content` などの固有キーワード値サイズと数値間のアニメーションを有効にできるプロパティ。
+`root` 要素に以下の指定を追加することで、全体的に有効になる。
+
+```css
+:root {
+  interpolate-size: allow-keywords;
+}
+```
+
+<Callout type="warning">
+2026年8月時点では、Firefox と Safari で未対応
+</Callout>
+
+## 参考
+
+<LinkCard
+  url="https://developer.mozilla.org/ja/docs/Web/CSS/Reference/Properties/interpolate-size"
+  label="interpolate-size - CSS | MDN"
+  imageUrl="https://developer.mozilla.org/mdn-social-image.46ac2375.png"
+  description="interpolate-size は CSS のプロパティで、アニメーションおよびトランジションを、<length-percentage> 値と、内在サイズ、fit-content。max-content との間で行うことができます。"
+/>
