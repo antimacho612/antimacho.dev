@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@astrojs/mdx": "7.0.5",
-    "@astrojs/react": "6.0.4",
+    "@astrojs/react": "7.1.1",
     "@astrojs/sitemap": "3.7.3",
     "@iconify-json/heroicons": "^1.2.3",
     "@iconify-json/logos": "^1.2.13",
